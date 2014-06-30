@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/relative_layout_app.xhtml">
+
+	<ui:define name="content">
+		<h:form id="form">
+			<p:panel header="Agregar Producto">
+				<p:panelGrid columns="2" cellpadding="2">
+					<h:outputText for="id_producto" value="ID Producto"></h:outputText>
+					<p:inputText id="id_producto" style="width: 96%;"
+						value="#{inventarioBean.producto.idProd}"></p:inputText>
+
+					<h:outputText for="nm_producto" value="Nombre Producto"></h:outputText>
+					<p:inputText id="nm_producto" style="width: 96%;"
+						value="#{inventarioBean.producto.nmProd}"></p:inputText>
+
+					<h:outputText for="tipo_producto" value="Tipo Producto"></h:outputText>
+					<p:inputText id="tipo_producto" style="width: 96%;"
+						vaue="#{inventarioBean.producto.tipoProd}"></p:inputText>
+
+					<h:outputText for="marca_producto" value="Marca Producto"></h:outputText>
+					<p:inputText id="marca_producto" style="width: 96%;"
+						value="#{inventarioBean.producto.marca}"></p:inputText>
+
+					<h:outputText for="cant_producto" value="Cantidad Producto"></h:outputText>
+					<p:inputText id="cant_producto" style="width: 96%;"
+						value="#{inventarioBean.producto.cantProd}"></p:inputText>
+
+					<h:outputText for="img_producto" value="Imagen Producto"></h:outputText>
+					<p:inputText id="img_producto" style="width: 96%;"
+						value="#{inventarioBean.producto.imagen}"></p:inputText>
+
+					<h:outputText for="detalle_producto" value="Detalle Producto"></h:outputText>
+					<p:inputTextarea id="detalle_producto" rows="5" cols="30"
+						value="#{inventarioBean.producto.detalle}" />
+
+					<p:commandButton id="producto_limpiar" value="Limpiar"
+						action="limpiarProducto" update="form" />
+						
+					<p:commandButton id="producto_submit" value="Agregar"
+						action="guardarProducto" update="form" />
+
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

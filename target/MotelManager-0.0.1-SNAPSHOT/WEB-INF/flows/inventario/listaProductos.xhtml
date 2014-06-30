@@ -1,0 +1,43 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/relative_layout_app.xhtml">
+
+	<ui:define name="content">
+		<h:form id="listaProductos">
+			<h1>Stock de Productos</h1>
+			<p:dataTable id="lista_productos" var="producto"
+				value="#{inventarioBean.productos}">
+				<p:column sortBy="#{producto.idProd}" headerText="ID Producto">
+					<h:outputText value="#{producto.idProd}" />
+				</p:column>
+
+				<p:column sortBy="#{producto.nmProd}" headerText="Nombre">
+					<h:outputText value="#{producto.nmProd}" />
+				</p:column>
+
+				<p:column sortBy="#{producto.tipoProd}" headerText="Tipo">
+					<h:outputText value="#{producto.tipoProd}" />
+				</p:column>
+
+				<p:column sortBy="#{producto.marca}" headerText="Marca">
+					<h:outputText value="#{producto.marca}" />
+				</p:column>
+
+				<p:column sortBy="#{producto.cantProd}" headerText="Cantidad">
+					<h:outputText value="#{producto.cantProd}" />
+				</p:column>
+
+				<p:column headerText="Imagen">
+					<h:outputText value="#{producto.imagen}" />
+				</p:column>
+
+				<p:column headerText="Detalle">
+					<h:outputText value="#{producto.detalle}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

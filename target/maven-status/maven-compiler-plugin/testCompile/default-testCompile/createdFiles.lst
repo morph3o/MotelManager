@@ -1,1 +1,7 @@
+com/motelmanager/service/SimpleProductManagerTest.class
+com/motelmanager/repository/JPAFacturaDAOTest.class
+com/motelmanager/repository/JPASalidaDAOTest.class
 com/motelmanager/web/test/HelloControllerTest.class
+com/motelmanager/repository/JPAProductoDAOTest.class
+com/motelmanager/repository/JPAEntradaDAOTest.class
+com/motelmanager/repository/TestConnection.class

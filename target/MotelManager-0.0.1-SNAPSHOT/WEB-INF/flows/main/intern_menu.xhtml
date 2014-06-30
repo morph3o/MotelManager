@@ -1,0 +1,40 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/relative_layout_app.xhtml">
+
+	<ui:define name="app_menu">
+		<p:accordionPanel>
+			<p:tab title="Inventario">
+				<h:form>
+					<p:commandButton value="Ver Inventario" id="lista_productos"
+						update=":pcontent" action="toInventario"
+						actionListener="#{routerBean.setNextPage('listaProductos')}"
+						styleClass="ui-priority-primary" style="width: 100%;" />
+					<p:commandButton value="Agregar Producto" id="aregar_producto"
+						update=":pcontent" action="toInventario"
+						actionListener="#{routerBean.setNextPage('addProd')}"
+						styleClass="ui-priority-primary" style="width: 100%;" />
+					<p:commandButton value="Ingresar Productos" id="ingresar_productos"
+						update=":pcontent" action="toInventario"
+						actionListener="#{routerBean.setNextPage('ingresarProds')}"
+						styleClass="ui-priority-primary" style="width: 100%;" />
+					<p:commandButton value="Sacar Productos" id="sacar_productos"
+						update=":pcontent" action="toInventario"
+						actionListener="#{routerBean.setNextPage('sacarProds')}"
+						styleClass="ui-priority-primary" style="width: 100%;" />
+				</h:form>
+			</p:tab>
+			<p:tab title="Facturas">
+			</p:tab>
+		</p:accordionPanel>
+	</ui:define>
+
+
+	<ui:define name="content">
+		<h1>Bienvenidos</h1>
+	</ui:define>
+
+</ui:composition>

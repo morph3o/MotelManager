@@ -70,5 +70,10 @@
 	<welcome-file-list>
 		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
+	
+<!-- 	<context-param> -->
+<!-- 	    <param-name>com.sun.faces.expressionFactory</param-name> -->
+<!-- 	    <param-value>com.sun.el.ExpressionFactoryImpl</param-value> -->
+<!-- 	</context-param> -->
 
 </web-app>

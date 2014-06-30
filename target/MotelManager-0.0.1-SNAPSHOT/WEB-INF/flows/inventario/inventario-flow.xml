@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<decision-state id="router_table">
+		<if test="routerBean.nextPage == 'listaProductos'" then="listaProductos" />
+		<if test="routerBean.nextPage == 'addProd'" then="agregarProducto" />
+		<if test="routerBean.nextPage == 'ingresarProds'" then="ingresarProductos" />
+		<if test="routerBean.nextPage == 'sacarProds'" then="sacarProductos" />		
+	</decision-state>
+	
+	<view-state id="listaProductos">
+		<on-entry>
+			<evaluate expression="inventarioBean.obtenerProductos()"></evaluate>
+		</on-entry>
+	</view-state>
+	
+	<view-state id="agregarProducto">
+		<on-entry>
+			<evaluate expression="inventarioBean.iniciarProducto()"></evaluate>
+		</on-entry>
+		<transition on="guardarProducto">
+			<evaluate expression="inventarioBean.insertarProducto(inventarioBean.producto)"></evaluate>
+			<evaluate expression="inventarioBean.iniciarProducto()"></evaluate>
+		</transition>
+	</view-state>
+	
+	<view-state id="ingresarProductos">
+		<on-entry>
+			<evaluate expression="entradasBean.init()"></evaluate>
+		</on-entry>
+	</view-state>
+	
+	<view-state id="sacarProductos">
+		<on-entry>
+			<evaluate expression="salidasBean.init()"></evaluate>
+		</on-entry>
+	</view-state>
+
+</flow>
