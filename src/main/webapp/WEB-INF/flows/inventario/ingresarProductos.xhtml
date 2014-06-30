@@ -1,0 +1,133 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/relative_layout_app.xhtml">
+
+	<ui:define name="content">
+		<h:form id="datosIngreso">
+			<p:growl id="growl" showDetail="false" sticky="false" widgetVar="growl" />
+			<p:panel header="Ingresar Productos">
+				<p:panelGrid cellpadding="2" style="width: 100%">
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText for="id_producto" value="ID Entrada"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<p:inputText id="id_entrada"
+								value="#{entradasBean.idEntrada}" readonly="true" styleClass="ingresar-producto-inputtext"></p:inputText>
+						</p:column>
+						
+						<p:column colspan="1">
+							<h:outputText for="id_factura" value="Factura Relacionada"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<p:inputText id="id_factura"
+								value="#{entradasBean.idEntrada}" readonly="true" styleClass="ingresar-producto-inputtext"></p:inputText>							
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1">
+							<p:outputLabel for="fecha" value="Fecha *" />
+						</p:column>
+						<p:column colspan="1">
+							<p:calendar id="fecha" value="#{entradasBean.fechaIngreso}" showOn="button" readonlyInput="true" pattern="dd/MM/yyyy" styleClass="ingresar-producto-calendar"/>
+						</p:column>
+						<p:column colspan="2" style="text-align: right">
+							<p:commandButton value="Agregar Producto" id="ingresar_productos" onclick="PF('dialogAgrProd').show();" />
+						</p:column>
+					</p:row>
+										
+				</p:panelGrid>
+			</p:panel>
+
+			<p:dataTable id="lista_productos_entrada" var="entrada" styleClass="table table-hover"
+				value="#{entradasBean.listaEntradas}" scrollable="true" scrollHeight="345">
+				
+				<p:column sortBy="#{entrada.producto.idProd}" headerText="ID Producto" styleClass="ingresar-producto-columna-productos">
+					<h:outputText value="#{entrada.producto.idProd}" />
+				</p:column>
+
+				<p:column sortBy="#{entrada.producto.nmProd}" headerText="Nombre" styleClass="ingresar-producto-columna-productos">
+					<h:outputText value="#{entrada.producto.nmProd}" />
+				</p:column>
+
+				<p:column sortBy="#{entrada.producto.cantProd}" headerText="Stock" styleClass="ingresar-producto-columna-productos">
+					<h:outputText value="#{entrada.cantExtAnt}" />
+				</p:column>
+
+				<p:column sortBy="#{entrada.cantIngreso}" headerText="Ingreso" styleClass="ingresar-producto-columna-productos">
+					<h:outputText value="#{entrada.cantIngreso}" />
+				</p:column>
+				
+				<p:column sortBy="#{entrada.cantExtDesp}" headerText="Stock Futuro" styleClass="ingresar-producto-columna-productos">
+					<h:outputText value="#{entrada.cantExtDesp}" />
+				</p:column>
+
+				<p:column headerText="Borrar" styleClass="ingresar-producto-columna-productos">
+					<p:commandButton update=":datosIngreso" icon="ui-icon-trash" actionListener="#{entradasBean.eliminarProductoDesdeEntrada}" >
+          		  		<f:setPropertyActionListener value="#{entrada}" target="#{entradasBean.entradaBorrar}" />
+            		</p:commandButton>					
+				</p:column>
+			</p:dataTable>
+			
+			<p:panel id="confirmarcionEntrada" styleClass="ingresar-producto-confirmar-ingreso">
+				<p:commandButton id="limpiarEntradaProductos" value="Limpiar"
+						 update="growl :datosIngreso" onclick="PF('cle').show();" />
+				<p:commandButton id="ingresarEntradaProductos" value="Ingresar"
+						 update="growl" onclick="PF('cd').show();" />
+			</p:panel>
+			
+		</h:form>
+		
+		<p:dialog header="Agregar Producto" widgetVar="dialogAgrProd" minHeight="40" width="400" modal="true" appendTo="@(body)">
+			<h:form id="agregarProdDialogForm">
+				<p:panelGrid columns="2" cellpadding="2" style="width: 100%" >
+				
+					<h:outputText value="Producto" />
+					<p:selectOneMenu id="lista_prods" value="#{entradasBean.prodSelec}" style="width: 100%">
+		                <f:selectItem itemLabel="Seleccionar Producto" itemValue="" noSelectionOption="true" />
+		                <f:selectItems value="#{entradasBean.listaProductos}" />
+		            </p:selectOneMenu>
+	
+					<h:outputText for="cant_producto" value="Cantidad Ingreso"></h:outputText>
+					<p:inputText id="cant_producto"
+						value="#{entradasBean.cantidadIngreso}" style="width: 100%"></p:inputText>
+					
+					<p:commandButton id="producto_agregar" value="Agregar"
+							update=":datosIngreso :datosIngreso:growl :agregarProdDialogForm" actionListener="#{entradasBean.cargarProductoALista}" 
+							oncomplete="PF('dialogAgrProd').hide();" resetValues="true" />
+							
+					<p:commandButton id="cancelar" value="Cancelar"
+							onclick="PF('dialogAgrProd').hide();" update=":datosIngreso :datosIngreso:growl :agregarProdDialogForm" />
+				</p:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		<p:confirmDialog message="Confirmar ingreso de productos al stock"
+						 	 header="Confirmación Ingreso" severity="alert" 	 	 
+						 	 widgetVar="cd" appendTo="@(body)">
+						 	 
+			<h:form id="confirmDialogForm"> 	 
+				<p:commandButton value="Confirmar" actionListener="#{entradasBean.ingresarEntradas}"
+						 update=":datosIngreso :datosIngreso:growl" oncomplete="PF('cd').hide();" process = "@this"/>
+						 
+				<p:commandButton value="Cancelar" onclick="PF('cd').hide();" type="button" />
+			</h:form>
+		</p:confirmDialog>
+		
+		<p:confirmDialog message="Desea limpiar entrada?"
+						 	 header="Confirmación Limpiar Entrada" severity="alert" 	 	 
+						 	 widgetVar="cle" appendTo="@(body)">
+						 	 
+			<h:form id="confirmDialogFormLimpiarEntrada"> 	 
+				<p:commandButton value="Confirmar" actionListener="#{entradasBean.initParameters}"
+						 update=":datosIngreso :datosIngreso:growl" oncomplete="PF('cle').hide();" process = "@this"/>
+						 
+				<p:commandButton value="Cancelar" onclick="PF('cle').hide();" type="button" />
+			</h:form>
+		</p:confirmDialog>
+		
+	</ui:define>
+</ui:composition>

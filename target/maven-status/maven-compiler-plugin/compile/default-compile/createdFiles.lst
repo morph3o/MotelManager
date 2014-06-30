@@ -1,0 +1,9 @@
+com/motelmanager/domain/DetalleFactura.class
+com/motelmanager/web/test/HelloController.class
+com/motelmanager/domain/Persona.class
+com/motelmanager/domain/Factura.class
+com/motelmanager/domain/Producto.class
+com/motelmanager/domain/Admin.class
+com/motelmanager/domain/Proveedor.class
+com/motelmanager/domain/Salida.class
+com/motelmanager/domain/Entrada.class

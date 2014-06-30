@@ -1,0 +1,129 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/relative_layout_app.xhtml">
+
+	<ui:define name="content">
+		<h:form id="datosEgreso">
+			<p:growl id="growl" showDetail="false" sticky="false" widgetVar="growl" />
+			<p:outputPanel id="metadata_egreso">
+				<h2>Retiro de Productos</h2>
+				<p:panelGrid style="width: 100%;">
+					<p:row>
+						<p:column colspan="1">
+							<h:outputText for="id_salida" value="ID Salida"></h:outputText>
+						</p:column>
+						<p:column colspan="1">
+							<p:inputText id="id_salida"
+								value="#{salidasBean.idSalida}" readonly="true" styleClass="ingresar-producto-inputtext"></p:inputText>
+						</p:column>
+						<p:column colspan="2">							
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="1">
+							<p:outputLabel for="fecha" value="Fecha" />
+						</p:column>
+						<p:column colspan="1">
+							<p:calendar id="fecha" value="#{salidasBean.fechaSalida}" showOn="button" readonlyInput="true" pattern="dd/MM/yyyy" styleClass="ingresar-producto-calendar"/>
+						</p:column>
+						<p:column colspan="2" style="text-align: right">
+							<p:commandButton value="Agregar Producto" id="agregar_producto" onclick="PF('dialogAgrProd').show();" />
+						</p:column>
+					</p:row>
+										
+				</p:panelGrid>
+			</p:outputPanel>
+
+			<p:outputPanel id="productos_egreso">
+				<p:dataTable id="lista_productos_salida" var="salida"
+					value="#{salidasBean.listaSalidas}" scrollable="true" scrollHeight="345">
+					
+					<p:column sortBy="#{salida.producto.idProd}" headerText="ID Producto" styleClass="ingresar-producto-columna-productos">
+						<h:outputText value="#{salida.producto.idProd}" />
+					</p:column>
+	
+					<p:column sortBy="#{salida.producto.nmProd}" headerText="Nombre" styleClass="ingresar-producto-columna-productos">
+						<h:outputText value="#{salida.producto.nmProd}" />
+					</p:column>
+	
+					<p:column sortBy="#{salida.producto.cantProd}" headerText="Stock" styleClass="ingresar-producto-columna-productos">
+						<h:outputText value="#{salida.cantExtAnt}" />
+					</p:column>
+	
+					<p:column sortBy="#{salida.cantEgreso}" headerText="Egreso" styleClass="ingresar-producto-columna-productos">
+						<h:outputText value="#{salida.cantEgreso}" />
+					</p:column>
+					
+					<p:column sortBy="#{salida.cantExtDesp}" headerText="Stock Futuro" styleClass="ingresar-producto-columna-productos">
+						<h:outputText value="#{salida.cantExtDesp}" />
+					</p:column>
+	
+					<p:column headerText="Borrar" styleClass="ingresar-producto-columna-productos">
+						<p:commandButton update=":datosEgreso" icon="ui-icon-trash" actionListener="#{salidasBean.eliminarProductoDesdeEntrada}" >
+	          		  		<f:setPropertyActionListener value="#{salida}" target="#{salidasBean.salidaBorrar}" />
+	            		</p:commandButton>					
+					</p:column>
+				</p:dataTable>
+			</p:outputPanel>
+			
+			<p:outputPanel id="confirmarcionEgreso" styleClass="ingresar-producto-confirmar-ingreso">
+				<p:commandButton id="limpiarEntradaProductos" value="Limpiar"
+						 update="growl :datosEgreso" onclick="PF('cle').show();" />
+				<p:commandButton id="ingresarEntradaProductos" value="Retirar"
+						 update="growl" onclick="PF('cd').show();" />
+			</p:outputPanel>
+			
+		</h:form>
+		
+		<p:dialog header="Agregar Producto" widgetVar="dialogAgrProd" minHeight="40" width="400" modal="true" appendTo="@(body)">
+			<h:form id="agregarProdDialogForm">
+				<p:panelGrid columns="2" cellpadding="2" style="width: 100%" >
+					<h:outputText value="Producto"></h:outputText>
+					<p:selectOneMenu id="lista_prods" value="#{salidasBean.prodSelec}" style="width: 100%">
+		                <f:selectItem itemLabel="Seleccionar Producto" itemValue="" noSelectionOption="true" />
+		                <f:selectItems value="#{salidasBean.listaProdDropDown}" />
+		            </p:selectOneMenu>
+	
+					<h:outputText for="cant_producto" value="Cantidad Egreso"></h:outputText>
+					<p:spinner id="cant_producto" value="#{salidasBean.cantidadEgreso}" style="width: 100%" />
+				</p:panelGrid>
+				<p:outputPanel style="float: right; margin-top: 5px;">
+					<p:commandButton id="producto_agregar" value="Agregar"
+							update=":datosEgreso :datosEgreso:growl :agregarProdDialogForm" actionListener="#{salidasBean.cargarProductoALista}" 
+							oncomplete="PF('dialogAgrProd').hide();" resetValues="true" />
+							
+					<p:commandButton id="cancelar" value="Cancelar"
+							onclick="PF('dialogAgrProd').hide();" update=":datosEgreso :datosEgreso:growl :agregarProdDialogForm" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		
+		<p:confirmDialog message="Confirmar egreso de productos del stock"
+						 	 header="Confirmación Egreso" severity="alert" 	 	 
+						 	 widgetVar="cd" appendTo="@(body)">
+						 	 
+			<h:form id="confirmDialogForm"> 	 
+				<p:commandButton value="Confirmar" actionListener="#{salidasBean.ingresarSalidas}"
+						 update=":datosEgreso :datosEgreso:growl" oncomplete="PF('cd').hide();" process = "@this"/>
+						 
+				<p:commandButton value="Cancelar" onclick="PF('cd').hide();" type="button" />
+			</h:form>
+		</p:confirmDialog>
+		
+		<p:confirmDialog message="Desea limpiar salida?"
+						 	 header="Confirmación Limpiar Salida" severity="alert" 	 	 
+						 	 widgetVar="cle" appendTo="@(body)">
+						 	 
+			<h:form id="confirmDialogFormLimpiarEntrada"> 	 
+				<p:commandButton value="Confirmar" actionListener="#{salidasBean.initParameters}"
+						 update=":datosEgreso :datosEgreso:growl" oncomplete="PF('cle').hide();" process = "@this"/>
+						 
+				<p:commandButton value="Cancelar" onclick="PF('cle').hide();" type="button" />
+			</h:form>
+		</p:confirmDialog>
+		
+	</ui:define>
+</ui:composition>
