@@ -14,7 +14,7 @@
 
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>bootstrap</param-value>
+		<param-value>none</param-value>
 	</context-param>
 
 	<!-- Use JSF view templates saved as *.xhtml, for use with Facelets -->

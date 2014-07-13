@@ -1,0 +1,31 @@
+.ingresar-producto-inputtext{
+	text-align: right;
+}
+
+.ingresar-producto-calendar > input{
+	text-align: right;
+}
+
+.ingresar-producto-calendar > button{
+	left: 5%;
+}
+
+.ingresar-producto-confirmar-ingreso{
+	text-align: right;
+}
+.ingresar-producto-columna-productos{
+	text-align: center;	
+}
+
+.header-columna-detalle{
+	width: 28%;
+}
+
+.data-columna-cantidad{
+	text-align: center !important;
+}
+
+.img-xs{
+	width: 50px;
+	height: 50px;	
+}

@@ -52,4 +52,14 @@ public class SimpleProductManager implements ProductManager {
 		return productoDAO.getProductos();
 	}
 
+	@Override
+	public void eliminarProducto(Producto prod) {
+		if(prod != null) productoDAO.removerProducto(prod);
+	}
+
+	@Override
+	public void updateProducto(Producto prod) {		
+		if(prod != null) productoDAO.modificarProducto(prod);
+	}
+
 }

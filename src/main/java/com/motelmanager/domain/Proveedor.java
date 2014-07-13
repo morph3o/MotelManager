@@ -15,7 +15,11 @@ public class Proveedor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="proveedor_id_seq",
+                       sequenceName="proveedor_id_seq",
+                       allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator="proveedor_id_seq")
 	private Integer id;
 
 	@Column(name="dir_prov")

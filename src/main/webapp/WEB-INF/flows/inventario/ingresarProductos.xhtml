@@ -5,129 +5,150 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/layouts/relative_layout_app.xhtml">
 
-	<ui:define name="content">
-		<h:form id="datosIngreso">
-			<p:growl id="growl" showDetail="false" sticky="false" widgetVar="growl" />
-			<p:panel header="Ingresar Productos">
-				<p:panelGrid cellpadding="2" style="width: 100%">
-					<p:row>
-						<p:column colspan="1">
-							<h:outputText for="id_producto" value="ID Entrada"></h:outputText>
-						</p:column>
-						<p:column colspan="1">
-							<p:inputText id="id_entrada"
-								value="#{entradasBean.idEntrada}" readonly="true" styleClass="ingresar-producto-inputtext"></p:inputText>
-						</p:column>
-						
-						<p:column colspan="1">
-							<h:outputText for="id_factura" value="Factura Relacionada"></h:outputText>
-						</p:column>
-						<p:column colspan="1">
-							<p:inputText id="id_factura"
-								value="#{entradasBean.idEntrada}" readonly="true" styleClass="ingresar-producto-inputtext"></p:inputText>							
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column colspan="1">
-							<p:outputLabel for="fecha" value="Fecha *" />
-						</p:column>
-						<p:column colspan="1">
-							<p:calendar id="fecha" value="#{entradasBean.fechaIngreso}" showOn="button" readonlyInput="true" pattern="dd/MM/yyyy" styleClass="ingresar-producto-calendar"/>
-						</p:column>
-						<p:column colspan="2" style="text-align: right">
-							<p:commandButton value="Agregar Producto" id="ingresar_productos" onclick="PF('dialogAgrProd').show();" />
-						</p:column>
-					</p:row>
-										
-				</p:panelGrid>
-			</p:panel>
-
-			<p:dataTable id="lista_productos_entrada" var="entrada" styleClass="table table-hover"
-				value="#{entradasBean.listaEntradas}" scrollable="true" scrollHeight="345">
-				
-				<p:column sortBy="#{entrada.producto.idProd}" headerText="ID Producto" styleClass="ingresar-producto-columna-productos">
-					<h:outputText value="#{entrada.producto.idProd}" />
-				</p:column>
-
-				<p:column sortBy="#{entrada.producto.nmProd}" headerText="Nombre" styleClass="ingresar-producto-columna-productos">
-					<h:outputText value="#{entrada.producto.nmProd}" />
-				</p:column>
-
-				<p:column sortBy="#{entrada.producto.cantProd}" headerText="Stock" styleClass="ingresar-producto-columna-productos">
-					<h:outputText value="#{entrada.cantExtAnt}" />
-				</p:column>
-
-				<p:column sortBy="#{entrada.cantIngreso}" headerText="Ingreso" styleClass="ingresar-producto-columna-productos">
-					<h:outputText value="#{entrada.cantIngreso}" />
-				</p:column>
-				
-				<p:column sortBy="#{entrada.cantExtDesp}" headerText="Stock Futuro" styleClass="ingresar-producto-columna-productos">
-					<h:outputText value="#{entrada.cantExtDesp}" />
-				</p:column>
-
-				<p:column headerText="Borrar" styleClass="ingresar-producto-columna-productos">
-					<p:commandButton update=":datosIngreso" icon="ui-icon-trash" actionListener="#{entradasBean.eliminarProductoDesdeEntrada}" >
-          		  		<f:setPropertyActionListener value="#{entrada}" target="#{entradasBean.entradaBorrar}" />
-            		</p:commandButton>					
-				</p:column>
-			</p:dataTable>
-			
-			<p:panel id="confirmarcionEntrada" styleClass="ingresar-producto-confirmar-ingreso">
-				<p:commandButton id="limpiarEntradaProductos" value="Limpiar"
-						 update="growl :datosIngreso" onclick="PF('cle').show();" />
-				<p:commandButton id="ingresarEntradaProductos" value="Ingresar"
-						 update="growl" onclick="PF('cd').show();" />
-			</p:panel>
-			
-		</h:form>
-		
-		<p:dialog header="Agregar Producto" widgetVar="dialogAgrProd" minHeight="40" width="400" modal="true" appendTo="@(body)">
-			<h:form id="agregarProdDialogForm">
-				<p:panelGrid columns="2" cellpadding="2" style="width: 100%" >
-				
-					<h:outputText value="Producto" />
-					<p:selectOneMenu id="lista_prods" value="#{entradasBean.prodSelec}" style="width: 100%">
-		                <f:selectItem itemLabel="Seleccionar Producto" itemValue="" noSelectionOption="true" />
-		                <f:selectItems value="#{entradasBean.listaProductos}" />
-		            </p:selectOneMenu>
+	<ui:define name="content">				
+		<div class="row-fluid">
+	        <div class="span12">
+	            <h1>Ingresar Productos</h1>
+	        </div>
+	        <h:form id="listaProductos" style="margin-top: 15px;" prependId="false">
+	        	<p:growl id="growl" showDetail="false" life="2000" widgetVar="growl" />
+		        <div class="row-fluid formHeader">	          
+		              <fieldset class="span7" style="margin-left: 0px; margin-top: 15px;">
+		                  <div class="control-group">
+		                     <label class="control-label" for="inputEmail">ID Entrada</label>
+		                     <div class="controls">
+		                        <p:inputText id="id_entrada" placeholder="Nombre del producto"
+									value="#{entradasBean.idEntrada}" readonly="true"></p:inputText>
+		                     </div>
+		                  </div>
+		                  <div class="control-group">
+		                     <label class="control-label" for="fecha">Fecha</label>
+		                     <div class="controls">
+								<p:calendar id="fecha" value="#{entradasBean.fechaIngreso}" style="margin-left: 33px;" readonlyInput="true" pattern="dd/MM/yyyy" />
+		                     </div>
+		                  </div>
+		              </fieldset>
+		              <fieldset class="span4" style="margin-left: 110px; margin-top: 15px;">
+		                  <div class="control-group">
+		                     <label class="control-label" for="id_factura">ID Factura</label>
+		                     <div class="controls">
+		                        <p:inputText id="id_factura"
+									value="#{entradasBean.idEntrada}" readonly="true"></p:inputText>
+		                     </div>
+		                  </div>
+		                  <div class="control-group">
+		                     <div class="controls">
+		                        <button type="button" class="btn btn-primary" data-toggle="modal" style="margin-left: 143px;" href="#form_add_prod">Agregar Producto</button>
+		                     </div>
+		                  </div>
+		              </fieldset>
+		        </div>
+		        <div class="span12" style="margin-left: 0px;">						                
+	                <p:remoteCommand name="eliminarProdLista" update="growl :listaProductos:tablaProductosEntrada" actionListener="#{entradasBean.eliminarProductoDesdeEntrada}"></p:remoteCommand>
+	                <p:remoteCommand name="ingresarEntrada" update=":listaProductos growl" oncomplete="jQuery('#confirmar_ingreso').modal('hide');" actionListener="#{entradasBean.ingresarEntradas}"></p:remoteCommand>
+	                <p:remoteCommand name="limpiarEntrada" update=":listaProductos growl" oncomplete="jQuery('#confirmar_limpiar').modal('hide');" actionListener="#{entradasBean.init}"></p:remoteCommand>	                
+	                <h:dataTable id="tablaProductosEntrada" value="#{entradasBean.listaEntradas}" var="entrada"
+	                            styleClass="table table-hover table-condensed ingresarProdTable" >
+	                    <h:column>
+	                        <f:facet name="header">ID</f:facet>
+	                        #{entrada.producto.idProd}
+	                    </h:column>
 	
-					<h:outputText for="cant_producto" value="Cantidad Ingreso"></h:outputText>
-					<p:inputText id="cant_producto"
-						value="#{entradasBean.cantidadIngreso}" style="width: 100%"></p:inputText>
-					
-					<p:commandButton id="producto_agregar" value="Agregar"
-							update=":datosIngreso :datosIngreso:growl :agregarProdDialogForm" actionListener="#{entradasBean.cargarProductoALista}" 
-							oncomplete="PF('dialogAgrProd').hide();" resetValues="true" />
-							
-					<p:commandButton id="cancelar" value="Cancelar"
-							onclick="PF('dialogAgrProd').hide();" update=":datosIngreso :datosIngreso:growl :agregarProdDialogForm" />
-				</p:panelGrid>
-			</h:form>
-		</p:dialog>
-		
-		<p:confirmDialog message="Confirmar ingreso de productos al stock"
-						 	 header="Confirmación Ingreso" severity="alert" 	 	 
-						 	 widgetVar="cd" appendTo="@(body)">
-						 	 
-			<h:form id="confirmDialogForm"> 	 
-				<p:commandButton value="Confirmar" actionListener="#{entradasBean.ingresarEntradas}"
-						 update=":datosIngreso :datosIngreso:growl" oncomplete="PF('cd').hide();" process = "@this"/>
-						 
-				<p:commandButton value="Cancelar" onclick="PF('cd').hide();" type="button" />
-			</h:form>
-		</p:confirmDialog>
-		
-		<p:confirmDialog message="Desea limpiar entrada?"
-						 	 header="Confirmación Limpiar Entrada" severity="alert" 	 	 
-						 	 widgetVar="cle" appendTo="@(body)">
-						 	 
-			<h:form id="confirmDialogFormLimpiarEntrada"> 	 
-				<p:commandButton value="Confirmar" actionListener="#{entradasBean.initParameters}"
-						 update=":datosIngreso :datosIngreso:growl" oncomplete="PF('cle').hide();" process = "@this"/>
-						 
-				<p:commandButton value="Cancelar" onclick="PF('cle').hide();" type="button" />
-			</h:form>
-		</p:confirmDialog>
-		
+	                    <h:column>
+	                        <f:facet name="header">Nombre</f:facet>
+	                        #{entrada.producto.nmProd}
+	                    </h:column>
+	
+	                    <h:column>
+	                        <f:facet name="header">Stock</f:facet>
+	                        #{entrada.cantExtAnt}
+	                    </h:column>
+	
+	                    <h:column>
+	                        <f:facet name="header">Ingreso</f:facet>
+	                        #{entrada.cantIngreso}
+	                    </h:column>
+	
+	                    <h:column id="prueba">
+	                        <f:facet name="header">Stock Futuro</f:facet>
+	                        #{entrada.cantExtDesp}
+	                    </h:column>
+	
+	                    <h:column>
+	                        <f:facet name="header">Acción</f:facet>
+	                        <a href="#" onclick="eliminarProdLista([{name:'idProd', value:#{entrada.producto.idProd}}]);" class="icon-trashcan-2"></a>
+	                    </h:column>
+	                </h:dataTable>	                        
+		        </div>
+	        </h:form>
+	        <div class="span12 form-actions" style="margin-left: 0px;">
+	          <button type="submit" class="btn btn-primary pull-right" data-toggle="modal" href="#confirmar_ingreso" style="margin-left: 5px;">Confirmar</button>	
+	          <button type="button" class="btn pull-right" data-toggle="modal" href="#confirmar_limpiar">Limpiar</button>	          
+	        </div>
+        </div>
+        <!-- MODAL AGREGAR PRODUCTO -->
+        <div id="form_add_prod" class="modal hide fade">
+	        <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	            <h3>Agregar Producto</h3>
+	            <h5>Seleccionar producto y su cantidad a ingresar.</h5>
+	        </div>
+	        <div class="modal-body" style="overflow: hidden;">
+	            <h:form class="form-horizontal">
+	              <p:remoteCommand name="agregarProdLista" update=":listaProductos:tablaProductosEntrada :listaProductos:growl" onsuccess="jQuery('#form_add_prod').modal('hide');" actionListener="#{entradasBean.cargarProductoALista}"></p:remoteCommand>	
+	              <div class="control-group">
+	                 <label class="control-label" for="lista_prods">Producto</label>
+	                 <div class="controls">
+			            <h:selectOneMenu id="lista_prods" value="#{entradasBean.prodSelec}">
+			            	<f:selectItem itemLabel="Seleccionar Producto" itemValue="" noSelectionOption="true" />
+				            <f:selectItems value="#{entradasBean.listaProductos}" />
+				       </h:selectOneMenu>
+	                 </div>
+	              </div>
+	              <div class="control-group">
+	                 <label class="control-label" for="cant_producto">Cantidad Ingreso</label>
+	                 <div class="controls">
+	                    <p:inputText id="cant_producto" type="number"
+							value="#{entradasBean.cantidadIngreso}"></p:inputText>
+	                 </div>
+	              </div>              
+	           </h:form>
+	        </div>
+	        <div class="modal-footer">
+	            <a data-dismiss="modal" href="#" class="btn">Cancelar</a>
+	            <a href="#" onclick="agregarProdLista();" class="btn btn-primary">Agregar</a>
+	        </div>
+	    </div>
+        <!-- FIN MODAL -->
+        <!-- MODAL CONFIRMACION INGRESO ENTRADA -->
+		<div id="confirmar_ingreso" class="modal hide fade">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h3>Confirmar Ingreso</h3>
+			</div>
+			<div class="modal-body">
+				<p>Desea confirmar el ingreso de los productos al stock?</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" onclick="jQuery('#confirmar_ingreso').modal('hide');">Cancelar</a>
+				<a href="#" class="btn btn-primary" onclick="ingresarEntrada();">Confirmar</a>
+			</div>
+		</div>
+        <!-- FIN MODAL CONFIRMACION INGRESO ENTRADA -->
+        <!-- MODAL CONFIRMACION LIMPIAR ENTRADA -->
+		<div id="confirmar_limpiar" class="modal hide fade">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h3>Confirmar Limpiar</h3>
+			</div>
+			<div class="modal-body">
+				<p>Desea confirmar la limpieza de todos los datos ingresados?</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" onclick="jQuery('#confirmar_limpiar').modal('hide');">Cancelar</a>
+				<a href="#" class="btn btn-primary" onclick="limpiarEntrada();">Confirmar</a>
+			</div>
+		</div>
+        <!-- FIN MODAL CONFIRMACION LIMPIAR ENTRADA -->
 	</ui:define>
 </ui:composition>

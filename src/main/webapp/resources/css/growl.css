@@ -1,0 +1,38 @@
+.ui-growl{
+	top: 5px;
+	right: 90px;
+}
+
+.growl-severity-error{
+	color: #ffffff;
+	background-color: #bc1c48;
+	border-color: #af1a5c;
+}
+
+.growl-severity-info{
+	color: #ffffff;
+	background-color: #2d89f0;
+	border-color: #119be9;
+}
+
+.growl-severity-warn{
+	color: #ffffff;
+	background-color: #f09609;
+	border: 1px solid #e16908;
+}
+
+.ui-growl-item{
+	width: 370px;
+}
+
+.toast{
+	width: 370px;
+}
+
+.toast-body{
+    padding-right: 15px;
+}
+
+.toast.toasttext03 h4 {
+	width: 310px;
+}

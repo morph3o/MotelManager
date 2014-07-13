@@ -1,0 +1,6 @@
+select entradas0_.id_prod as id9_5_4_, entradas0_.id as id4_, entradas0_.id as id2_3_, entradas0_.cant_ext_ant as cant2_2_3_, entradas0_.cant_ext_desp as cant3_2_3_, entradas0_.cant_ingreso as cant4_2_3_, entradas0_.id_factura as id7_2_3_, entradas0_.fecha_ingreso as fecha5_2_3_, entradas0_.id_entrada as id6_2_3_, entradas0_.id_persona as id8_2_3_, entradas0_.id_prod as id9_2_3_, factura1_.id as id3_0_, factura1_.id_factura as id2_3_0_, factura1_.link_imagen as link3_3_0_, factura1_.precio_neto as precio4_3_0_, factura1_.precio_total as precio5_3_0_, factura1_.id_prov as id6_3_0_, proveedor2_.id as id6_1_, proveedor2_.dir_prov as dir2_6_1_, proveedor2_.email_prov as email3_6_1_, proveedor2_.id_prov as id4_6_1_, proveedor2_.nm_prov as nm5_6_1_, proveedor2_.tel_prov as tel6_6_1_, persona3_.id as id4_2_, persona3_.ape_materno as ape2_4_2_, persona3_.ape_paterno as ape3_4_2_, persona3_.email as email4_2_, persona3_.id_persona as id5_4_2_, persona3_.nombre as nombre4_2_, persona3_.telefono as telefono4_2_ 
+from entradas entradas0_ 
+	left outer join Factura factura1_ on entradas0_.id_factura=factura1_.id_factura 
+	left outer join Proveedor proveedor2_ on factura1_.id_prov=proveedor2_.id 
+	left outer join Persona persona3_ on entradas0_.id_persona=persona3_.id_persona 
+where entradas0_.id_prod=?

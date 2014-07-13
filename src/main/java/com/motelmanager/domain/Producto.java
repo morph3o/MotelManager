@@ -16,7 +16,11 @@ public class Producto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="producto_id_seq",
+                       sequenceName="producto_id_seq",
+                       allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator="producto_id_seq")
 	private Integer id;
 
 	@Column(name="cant_prod")
@@ -52,11 +56,11 @@ public class Producto implements Serializable {
 	public Producto() {
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

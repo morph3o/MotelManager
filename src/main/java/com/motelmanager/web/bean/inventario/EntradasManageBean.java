@@ -84,11 +84,19 @@ public class EntradasManageBean {
 		} else if (this.cantidadIngreso == 0){
 			FacesMessageUtil.showErrorMessage("La cantidad ingresada debe ser mayor a 0.");
 			return;
+		} else if(this.existeProdEnEntradas(auxProd)){
+			for(Entrada entradaAux : this.listaEntradas){
+				if(entradaAux.getProducto().getIdProd() == auxProd.getIdProd()){
+					entradaAux.setCantIngreso(entradaAux.getCantIngreso() + this.cantidadIngreso);
+					entradaAux.setCantExtDesp(entradaAux.getCantExtDesp() + this.cantidadIngreso);
+					this.limpiarModalNuevoProducto();
+					return;
+				}			
+			}
 		} else {
 			int cantFutura = 0;
 			entrada.setIdEntrada(this.idEntrada);
 			entrada.setFactura(null);
-			entrada.setFechaIngreso(this.fechaIngreso);
 			entrada.setProducto(auxProd);			
 			entrada.setCantIngreso(this.cantidadIngreso);
 			entrada.setCantExtAnt(auxProd.getCantProd());
@@ -99,6 +107,15 @@ public class EntradasManageBean {
 			this.listaEntradas.add(entrada);
 			this.limpiarModalNuevoProducto();
 		}		
+	}
+	
+	private boolean existeProdEnEntradas(Producto producto){
+		for(Entrada entrada : this.listaEntradas){
+			if(entrada.getProducto().getIdProd() == producto.getIdProd()){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private boolean validarFormularioEntrada(){
@@ -115,15 +132,21 @@ public class EntradasManageBean {
 	}
 	
 	public void eliminarProductoDesdeEntrada(){
-		if(this.entradaBorrar != null){
-			this.listaEntradas.remove(entradaBorrar);
-			this.entradaBorrar = null;
-		}		
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap(); 
+		String idProdEliminar = params.get("idProd");
+		int idProd = Integer.parseInt(idProdEliminar);
+		for(Entrada entrada : this.listaEntradas){
+			if(entrada.getProducto().getIdProd() == idProd){
+				this.listaEntradas.remove(entrada);
+				return;
+			}
+		}	
 	}
 	
-	public void ingresarEntradas(ActionEvent actionEvent){
+	public void ingresarEntradas(){
 		try{
 			if(this.validarFormularioEntrada()){
+				this.ingresarFechaEntradas();
 				entradaManager.ingresarProductos(this.listaEntradas);
 				this.init();
 			} else {
@@ -134,6 +157,12 @@ public class EntradasManageBean {
 			return;
 		}
 		FacesMessageUtil.showInfoMessage("Se han ingresado los productos satisfactoriamente.");
+	}
+	
+	private void ingresarFechaEntradas(){
+		for(Entrada ent : this.listaEntradas){
+			ent.setFechaIngreso(fechaIngreso);
+		}
 	}
 	
 	public Entrada getEntrada() {

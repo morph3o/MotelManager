@@ -19,54 +19,74 @@
 		<title>Motel Manager v1.0</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<!-- Line to include primefaces native jquery -->
-		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+		<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
 		<!-- remove or comment this line if you want to use the local fonts -->
-<!--    		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css' /> -->
-		<link rel="stylesheet" type="text/css" href="../css/main_style.css" />
-<!-- 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro.css" /> -->
-<!-- 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-responsive.css" /> -->
-<!-- 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-icons.css" /> -->
-<!-- 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-ui-light.css" /> -->
-<!-- 		<link rel="stylesheet" type="text/css" href="../assets/css/datepicker.css" /> -->
-		
-<!-- 		Le fav and touch icons -->
-<!-- 		<link rel="shortcut icon" href="../assets/ico/favicon.ico" /> -->
-<!-- 		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png" /> -->
-<!-- 		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png" /> -->
-<!-- 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png" /> -->
-<!-- 		<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png" /> -->
-		
-<!-- 		<script type="text/javascript" src="../assets/js/modernizr-2.6.2.min.js"></script> -->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css' />
+		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro.css" />
+		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-responsive.css" />
+		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-icons-nm.css" />
+		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-ui-light.css" />
+		<link rel="stylesheet" type="text/css" href="../assets/css/datepicker.css" />
+		<link rel="stylesheet" type="text/css" href="../assets/css/file-input.css" />
+		<link rel="stylesheet" type="text/css" href="../resources/css/growl.css" />			
+		<!-- 		Le fav and touch icons -->
+		<!-- 		<link rel="shortcut icon" href="../assets/ico/favicon.ico" /> -->
+		<!-- 		<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png" /> -->
+		<!-- 		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png" /> -->
+		<!-- 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png" /> -->
+		<!-- 		<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png" /> -->		
+		<script type="text/javascript" src="../assets/js/modernizr-2.6.2.min.js"></script>
+		<h:outputStylesheet library="css" name="listaProductos.css" />
+		<h:outputStylesheet library="css" name="entradaProductos.css" />
+		<h:outputStylesheet library="css" name="main_style.css" />
 	</h:head>
 
 	<h:body>
-		<p:layout fullPage="true">
-			<p:layoutUnit id="menu" position="west" size="20%">
-				<p:outputPanel id="menu_content">
+		<div class="container-fluid">
+			<header id="nav-bar" class="container">
+				<div class="row">
+					<div class="span12">
+						<div id="header-container">
+							<a id="backbutton" class="win-backbutton" href="/MotelManager"></a>
+							<h5>Motel Manager</h5>
+							<div class="dropdown">
+								<h2 class="header-dropdown accent-color">Menu Principal</h2>
+							</div>
+						</div>
+						<div id="top-info" class="pull-right">
+							<a id="settings" href="#" class="win-command pull-right"> 
+								<span class="win-commandicon win-commandring icon-cog-3"></span>
+							</a> 
+							<a id="logged-user" href="#" class="win-command pull-right">
+								<span class="win-commandicon win-commandring icon-user"></span>
+							</a>
+							<div class="pull-left">
+								<h3>Piero</h3>
+								<h4>Divasto</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+			<div class="row-fluid">
+				<p:outputPanel id="pmenu" styleClass="span2">
 					<ui:insert name="app_menu" />
 				</p:outputPanel>
-			</p:layoutUnit>
-			<p:layoutUnit id="principal_content" position="center">
-				<p:outputPanel id="pcontent">
+				<p:outputPanel id="pcontent" styleClass="span10">
 					<ui:insert name="content" />
 				</p:outputPanel>
-			</p:layoutUnit>
-		</p:layout>
-
-		<script type="text/javascript" src="../js/main_script.js"></script>
-<!-- 		Bootstrap Metro -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootmetro-charms.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootmetro-icons-ie7.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootmetro-panorama.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootmetro-pivot.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootmetro.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootstrap-datepicker.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootstrap.js"></script> -->
-<!-- 		Fin Bootstrap Metro -->
-		
-<!-- 		<script type="text/javascript" src="../assets/js/jquery.mousewheel.min.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/jquery.touchSwipe.min.js"></script> -->
-
+			</div>
+		</div>
+		<!-- 		Bootstrap Metro -->
+		<script type="text/javascript" src="../assets/js/min/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../assets/js/bootmetro-panorama.js"></script>
+		<script type="text/javascript" src="../assets/js/bootmetro-pivot.js"></script>
+		<script type="text/javascript" src="../assets/js/bootmetro-charms.js"></script>
+		<script type="text/javascript" src="../assets/js/bootstrap-datepicker.js"></script>
+		<script type="text/javascript" src="../assets/js/bootstrap-alert.js"></script>
+		<!-- 		Fin Bootstrap Metro -->
+		<script type="text/javascript" src="../js/customGrowl.js"></script>
 	</h:body>
 
 </f:view>

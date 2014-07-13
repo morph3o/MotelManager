@@ -14,5 +14,9 @@ public interface ProductManager extends Serializable{
 	public void guardarProducto(Producto producto);
 	
 	public List<Producto> listarProductos();
+	
+	public void eliminarProducto(Producto prod);
+	
+	public void updateProducto(Producto prod);
 
 }

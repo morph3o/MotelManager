@@ -45,6 +45,7 @@ public class SalidasManageBean {
 	
 	public void cargarProductoALista(){
 		Producto auxProd = null;
+		auxProd = this.obtenerProductoDesdeLista(prodSelec);
 		if(prodSelec == null || prodSelec.isEmpty()){
 			FacesMessageUtil.showErrorMessage("Debes seleccionar un producto de la lista.");
 			return;
@@ -53,18 +54,54 @@ public class SalidasManageBean {
 			FacesMessageUtil.showErrorMessage("El valor de egreso debe ser mayor a 0.");
 			return;
 		}
-		Salida salida = new Salida();
-		auxProd = this.obtenerProductoDesdeLista(prodSelec);
-		salida.setCantEgreso(cantidadEgreso);
-		salida.setProducto(auxProd);
-		salida.setFechaEgreso(fechaSalida);
-		salida.setCantExtAnt(auxProd.getCantProd());
-		int cantFutura = auxProd.getCantProd() - cantidadEgreso;
-		salida.setCantExtDesp(cantFutura);
-		salida.getProducto().setCantProd(cantFutura);
-		salida.setIdSalida(1);
-		
-		listaSalidas.add(salida);
+		if(this.existeProductoListaSalida(auxProd)){
+			for(Salida sal : this.listaSalidas){
+				if(sal.getProducto().getIdProd() == auxProd.getIdProd()){
+					sal.setCantEgreso(cantidadEgreso);
+					sal.setCantExtAnt(auxProd.getCantProd());
+					sal.setCantExtDesp(auxProd.getCantProd() - cantidadEgreso);
+				}
+			}
+		} else {
+			Salida salida = new Salida();			
+			salida.setCantEgreso(cantidadEgreso);
+			salida.setProducto(auxProd);
+			salida.setCantExtAnt(auxProd.getCantProd());
+			int cantFutura = auxProd.getCantProd() - cantidadEgreso;
+			salida.setCantExtDesp(cantFutura);
+			salida.getProducto().setCantProd(cantFutura);
+			salida.setIdSalida(this.idSalida);
+			
+			listaSalidas.add(salida);
+		}
+	}
+	
+	private boolean existeProductoListaSalida(Producto prod){
+		for(Salida sal : this.listaSalidas){
+			if(sal.getProducto().getIdProd() == prod.getIdProd()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private void insertarFechaSalida(){
+		for(Salida sal : this.listaSalidas){
+			sal.setFechaEgreso(fechaSalida);
+		}
+	}
+	
+	private boolean validarFormularioEntrada(){
+		boolean validador = true;
+		if(this.fechaSalida == null){
+			FacesMessageUtil.showErrorMessage("La fecha debe ser ingresada.");
+			validador = false;
+		} 
+		if(this.listaSalidas == null || this.listaSalidas.size() <= 0){
+			FacesMessageUtil.showErrorMessage("Debe ingresar a lo menos un producto.");
+			validador = false;
+		}
+		return validador;
 	}
 	
 	public void eliminarProductoDesdeEntrada(){
@@ -76,18 +113,18 @@ public class SalidasManageBean {
 	
 	public void ingresarSalidas(){
 		try{
-			if(true){
+			if(this.validarFormularioEntrada()){
+				this.insertarFechaSalida();
 				salidaManager.ingresarSalidas(this.listaSalidas);
 				this.init();
+				FacesMessageUtil.showInfoMessage("Se han ingresado los productos satisfactoriamente.");
+			} else {
+				return;
 			}
-//			else {
-//				return;
-//			}
 		} catch (Exception ex) {
 			FacesMessageUtil.showErrorMessage("Ocurrió un error al intentar ingresar la entrada.");
 			return;
 		}
-		FacesMessageUtil.showInfoMessage("Se han ingresado los productos satisfactoriamente.");
 	}
 	
 	private Producto obtenerProductoDesdeLista(String nombreProd){

@@ -16,7 +16,11 @@ public class Entrada implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="entradas_id_seq",
+                       sequenceName="entradas_id_seq",
+                       allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator="entradas_id_seq")
 	private Integer id;
 	
 	@Column(name="cant_ext_ant")

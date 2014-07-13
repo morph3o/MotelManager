@@ -14,7 +14,11 @@ public class Admin implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="admins_id_seq",
+                       sequenceName="admins_id_seq",
+                       allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator="admins_id_seq")
 	private Integer id;
 
 	private String clave;

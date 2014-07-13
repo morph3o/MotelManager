@@ -1,0 +1,7 @@
+#inventario_icon_menu {
+	background-image: url(../images/inventario.png);
+	background-size: 150px 150px;
+	background-position-x: 100%;
+	background-position-y: -100%;
+	position: relative;
+}

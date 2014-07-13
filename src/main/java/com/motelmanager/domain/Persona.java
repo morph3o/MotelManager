@@ -15,7 +15,11 @@ public class Persona implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="persona_id_seq",
+                       sequenceName="persona_id_seq",
+                       allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator="persona_id_seq")
 	private Integer id;
 
 	@Column(name="ape_materno")

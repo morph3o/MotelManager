@@ -6,124 +6,141 @@
 	template="/WEB-INF/layouts/relative_layout_app.xhtml">
 
 	<ui:define name="content">
-		<h:form id="datosEgreso">
-			<p:growl id="growl" showDetail="false" sticky="false" widgetVar="growl" />
-			<p:outputPanel id="metadata_egreso">
-				<h2>Retiro de Productos</h2>
-				<p:panelGrid style="width: 100%;">
-					<p:row>
-						<p:column colspan="1">
-							<h:outputText for="id_salida" value="ID Salida"></h:outputText>
-						</p:column>
-						<p:column colspan="1">
-							<p:inputText id="id_salida"
-								value="#{salidasBean.idSalida}" readonly="true" styleClass="ingresar-producto-inputtext"></p:inputText>
-						</p:column>
-						<p:column colspan="2">							
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column colspan="1">
-							<p:outputLabel for="fecha" value="Fecha" />
-						</p:column>
-						<p:column colspan="1">
-							<p:calendar id="fecha" value="#{salidasBean.fechaSalida}" showOn="button" readonlyInput="true" pattern="dd/MM/yyyy" styleClass="ingresar-producto-calendar"/>
-						</p:column>
-						<p:column colspan="2" style="text-align: right">
-							<p:commandButton value="Agregar Producto" id="agregar_producto" onclick="PF('dialogAgrProd').show();" />
-						</p:column>
-					</p:row>
-										
-				</p:panelGrid>
-			</p:outputPanel>
-
-			<p:outputPanel id="productos_egreso">
-				<p:dataTable id="lista_productos_salida" var="salida"
-					value="#{salidasBean.listaSalidas}" scrollable="true" scrollHeight="345">
-					
-					<p:column sortBy="#{salida.producto.idProd}" headerText="ID Producto" styleClass="ingresar-producto-columna-productos">
-						<h:outputText value="#{salida.producto.idProd}" />
-					</p:column>
+		<div class="row-fluid">
+			<div class="span12">
+	            <h1>Retiro de Productos</h1>
+	        </div>
+	        <h:form id="salidaProductos" style="margin-top: 15px;" prependId="false">
+	        	<p:growl id="growl" showDetail="false" life="2000" widgetVar="growl" />
+	        	<div class="row-fluid formHeader">	          
+		              <fieldset class="span7" style="margin-left: 0px; margin-top: 15px;">
+		                  <div class="control-group">
+		                     <label class="control-label" for="inputEmail">ID Salida</label>
+		                     <div class="controls">
+		                     	<p:inputText id="id_salida" value="#{salidasBean.idSalida}" readonly="true" style="margin-left: 11px;"></p:inputText>
+		                     </div>
+		                  </div>
+		                  <div class="control-group">
+		                     <label class="control-label" for="fecha">Fecha</label>
+		                     <div class="controls">
+								<p:calendar id="fecha" value="#{salidasBean.fechaSalida}" style="margin-left: 33px;" readonlyInput="true" pattern="dd/MM/yyyy" />
+		                     </div>
+		                  </div>
+		              </fieldset>
+		              <fieldset class="span4" style="margin-left: 110px; margin-top: 15px;">
+		                  <div class="control-group">
+		                     <div class="controls">
+		                        <button type="button" class="btn btn-primary" data-toggle="modal" style="margin-left: 143px;" href="#form_add_prod">Agregar Producto</button>
+		                     </div>
+		                  </div>
+		              </fieldset>
+		        </div>
+		        <div class="span12" style="margin-left: 0px;">
+		        	<p:remoteCommand name="eliminarProdLista" update="growl :salidaProductos:tablaProductosEntrada" actionListener="#{salidasBean.eliminarProductoDesdeEntrada}"></p:remoteCommand>
+		        	<p:remoteCommand name="ingresarRetiro" update=":salidaProductos growl" oncomplete="jQuery('#confirmar_retiro').modal('hide');" actionListener="#{salidasBean.ingresarSalidas}"></p:remoteCommand>
+		        	<p:remoteCommand name="limpiarSalida" update=":salidaProductos growl" oncomplete="jQuery('#confirmar_limpiar').modal('hide');" actionListener="#{salidasBean.init}"></p:remoteCommand>
+		        	<h:dataTable id="tablaProductosEntrada" value="#{salidasBean.listaSalidas}" var="salida"
+	                            styleClass="table table-hover table-condensed ingresarProdTable" >
+	                    <h:column>
+	                        <f:facet name="header">ID</f:facet>
+	                        #{salida.producto.idProd}
+	                    </h:column>
 	
-					<p:column sortBy="#{salida.producto.nmProd}" headerText="Nombre" styleClass="ingresar-producto-columna-productos">
-						<h:outputText value="#{salida.producto.nmProd}" />
-					</p:column>
+	                    <h:column>
+	                        <f:facet name="header">Nombre</f:facet>
+	                        #{salida.producto.nmProd}
+	                    </h:column>
 	
-					<p:column sortBy="#{salida.producto.cantProd}" headerText="Stock" styleClass="ingresar-producto-columna-productos">
-						<h:outputText value="#{salida.cantExtAnt}" />
-					</p:column>
+	                    <h:column>
+	                        <f:facet name="header">Stock</f:facet>
+	                        #{salida.cantExtAnt}
+	                    </h:column>
 	
-					<p:column sortBy="#{salida.cantEgreso}" headerText="Egreso" styleClass="ingresar-producto-columna-productos">
-						<h:outputText value="#{salida.cantEgreso}" />
-					</p:column>
-					
-					<p:column sortBy="#{salida.cantExtDesp}" headerText="Stock Futuro" styleClass="ingresar-producto-columna-productos">
-						<h:outputText value="#{salida.cantExtDesp}" />
-					</p:column>
+	                    <h:column>
+	                        <f:facet name="header">Egreso</f:facet>
+	                        #{salida.cantEgreso}
+	                    </h:column>
 	
-					<p:column headerText="Borrar" styleClass="ingresar-producto-columna-productos">
-						<p:commandButton update=":datosEgreso" icon="ui-icon-trash" actionListener="#{salidasBean.eliminarProductoDesdeEntrada}" >
-	          		  		<f:setPropertyActionListener value="#{salida}" target="#{salidasBean.salidaBorrar}" />
-	            		</p:commandButton>					
-					</p:column>
-				</p:dataTable>
-			</p:outputPanel>
-			
-			<p:outputPanel id="confirmarcionEgreso" styleClass="ingresar-producto-confirmar-ingreso">
-				<p:commandButton id="limpiarEntradaProductos" value="Limpiar"
-						 update="growl :datosEgreso" onclick="PF('cle').show();" />
-				<p:commandButton id="ingresarEntradaProductos" value="Retirar"
-						 update="growl" onclick="PF('cd').show();" />
-			</p:outputPanel>
-			
-		</h:form>
-		
-		<p:dialog header="Agregar Producto" widgetVar="dialogAgrProd" minHeight="40" width="400" modal="true" appendTo="@(body)">
-			<h:form id="agregarProdDialogForm">
-				<p:panelGrid columns="2" cellpadding="2" style="width: 100%" >
-					<h:outputText value="Producto"></h:outputText>
-					<p:selectOneMenu id="lista_prods" value="#{salidasBean.prodSelec}" style="width: 100%">
-		                <f:selectItem itemLabel="Seleccionar Producto" itemValue="" noSelectionOption="true" />
-		                <f:selectItems value="#{salidasBean.listaProdDropDown}" />
-		            </p:selectOneMenu>
+	                    <h:column id="prueba">
+	                        <f:facet name="header">Stock Futuro</f:facet>
+	                        #{salida.cantExtDesp}
+	                    </h:column>
 	
-					<h:outputText for="cant_producto" value="Cantidad Egreso"></h:outputText>
-					<p:spinner id="cant_producto" value="#{salidasBean.cantidadEgreso}" style="width: 100%" />
-				</p:panelGrid>
-				<p:outputPanel style="float: right; margin-top: 5px;">
-					<p:commandButton id="producto_agregar" value="Agregar"
-							update=":datosEgreso :datosEgreso:growl :agregarProdDialogForm" actionListener="#{salidasBean.cargarProductoALista}" 
-							oncomplete="PF('dialogAgrProd').hide();" resetValues="true" />
-							
-					<p:commandButton id="cancelar" value="Cancelar"
-							onclick="PF('dialogAgrProd').hide();" update=":datosEgreso :datosEgreso:growl :agregarProdDialogForm" />
-				</p:outputPanel>
-			</h:form>
-		</p:dialog>
-		
-		<p:confirmDialog message="Confirmar egreso de productos del stock"
-						 	 header="Confirmación Egreso" severity="alert" 	 	 
-						 	 widgetVar="cd" appendTo="@(body)">
-						 	 
-			<h:form id="confirmDialogForm"> 	 
-				<p:commandButton value="Confirmar" actionListener="#{salidasBean.ingresarSalidas}"
-						 update=":datosEgreso :datosEgreso:growl" oncomplete="PF('cd').hide();" process = "@this"/>
-						 
-				<p:commandButton value="Cancelar" onclick="PF('cd').hide();" type="button" />
-			</h:form>
-		</p:confirmDialog>
-		
-		<p:confirmDialog message="Desea limpiar salida?"
-						 	 header="Confirmación Limpiar Salida" severity="alert" 	 	 
-						 	 widgetVar="cle" appendTo="@(body)">
-						 	 
-			<h:form id="confirmDialogFormLimpiarEntrada"> 	 
-				<p:commandButton value="Confirmar" actionListener="#{salidasBean.initParameters}"
-						 update=":datosEgreso :datosEgreso:growl" oncomplete="PF('cle').hide();" process = "@this"/>
-						 
-				<p:commandButton value="Cancelar" onclick="PF('cle').hide();" type="button" />
-			</h:form>
-		</p:confirmDialog>
-		
+	                    <h:column>
+	                        <f:facet name="header">Acción</f:facet>
+	                        <a href="#" onclick="eliminarProdLista([{name:'idProd', value:#{salida.producto.idProd}}]);" class="icon-trashcan-2"></a>
+	                    </h:column>
+	                </h:dataTable>
+		        </div>
+	        </h:form>
+	        <div class="span12 form-actions" style="margin-left: 0px;">
+	          <button type="submit" class="btn btn-primary pull-right" data-toggle="modal" href="#confirmar_retiro" style="margin-left: 5px;">Confirmar</button>	
+	          <button type="button" class="btn pull-right" data-toggle="modal" href="#confirmar_limpiar">Limpiar</button>	          
+	        </div>
+		</div>
+		<!-- MODAL AGREGAR PRODUCTO -->
+        <div id="form_add_prod" class="modal hide fade">
+	        <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+	            <h3>Agregar Producto</h3>
+	            <h5>Seleccionar producto y su cantidad a retirar.</h5>
+	        </div>
+	        <div class="modal-body" style="overflow: hidden;">
+	            <h:form class="form-horizontal">
+	              <p:remoteCommand name="agregarProdLista" update=":salidaProductos:tablaProductosEntrada :salidaProductos:growl" onsuccess="jQuery('#form_add_prod').modal('hide');" actionListener="#{salidasBean.cargarProductoALista}"></p:remoteCommand>	
+	              <div class="control-group">
+	                 <label class="control-label" for="lista_prods">Producto</label>
+	                 <div class="controls">
+			            <h:selectOneMenu id="lista_prods" value="#{salidasBean.prodSelec}">
+			            	<f:selectItem itemLabel="Seleccionar Producto" itemValue="" noSelectionOption="true" />
+				            <f:selectItems value="#{salidasBean.listaProdDropDown}" />
+				       </h:selectOneMenu>
+	                 </div>
+	              </div>
+	              <div class="control-group">
+	                 <label class="control-label" for="cant_producto">Cantidad Salida</label>
+	                 <div class="controls">
+	                    <p:inputText id="cant_producto" type="number"
+							value="#{salidasBean.cantidadEgreso}"></p:inputText>
+	                 </div>
+	              </div>              
+	           </h:form>
+	        </div>
+	        <div class="modal-footer">
+	            <a data-dismiss="modal" href="#" class="btn">Cancelar</a>
+	            <a href="#" onclick="agregarProdLista();" class="btn btn-primary">Agregar</a>
+	        </div>
+	    </div>
+        <!-- FIN MODAL -->
+        <!-- MODAL CONFIRMACION RETIRO PRODUCTOS -->
+		<div id="confirmar_retiro" class="modal hide fade">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h3>Confirmar Retiro</h3>
+			</div>
+			<div class="modal-body">
+				<p>Desea confirmar el retiro de los productos desde el stock?</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" onclick="jQuery('#confirmar_retiro').modal('hide');">Cancelar</a>
+				<a href="#" class="btn btn-primary" onclick="ingresarRetiro();">Confirmar</a>
+			</div>
+		</div>
+        <!-- FIN MODAL CONFIRMACION RETIRO PRODUCTOS -->
+        <!-- MODAL CONFIRMACION LIMPIAR SALIDA -->
+		<div id="confirmar_limpiar" class="modal hide fade">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h3>Confirmar Limpiar</h3>
+			</div>
+			<div class="modal-body">
+				<p>Desea confirmar la limpieza de todos los datos ingresados?</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" onclick="jQuery('#confirmar_limpiar').modal('hide');">Cancelar</a>
+				<a href="#" class="btn btn-primary" onclick="limpiarSalida();">Confirmar</a>
+			</div>
+		</div>
+        <!-- FIN MODAL CONFIRMACION LIMPIAR SALIDA -->
 	</ui:define>
 </ui:composition>

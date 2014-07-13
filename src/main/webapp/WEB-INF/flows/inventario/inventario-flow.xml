@@ -14,17 +14,9 @@
 	<view-state id="listaProductos">
 		<on-entry>
 			<evaluate expression="inventarioBean.obtenerProductos()"></evaluate>
-		</on-entry>
-	</view-state>
-	
-	<view-state id="agregarProducto">
-		<on-entry>
 			<evaluate expression="inventarioBean.iniciarProducto()"></evaluate>
+			<evaluate expression="inventarioBean.iniciarProductoMod()"></evaluate>
 		</on-entry>
-		<transition on="guardarProducto">
-			<evaluate expression="inventarioBean.insertarProducto(inventarioBean.producto)"></evaluate>
-			<evaluate expression="inventarioBean.iniciarProducto()"></evaluate>
-		</transition>
 	</view-state>
 	
 	<view-state id="ingresarProductos">

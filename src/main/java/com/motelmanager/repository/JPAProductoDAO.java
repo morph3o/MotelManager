@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.motelmanager.domain.Producto;
+import com.motelmanager.util.FacesMessageUtil;
 
 @Repository(value = "productoDAO")
 public class JPAProductoDAO implements ProductoDAO{
@@ -72,7 +73,14 @@ public class JPAProductoDAO implements ProductoDAO{
 
 	@Transactional
 	public void removerProducto(Producto prod) {
-		em.remove(em.contains(prod) ? prod : em.merge(prod));
+		try{
+			em.remove(em.contains(prod) ? prod : em.merge(prod));
+			FacesMessageUtil.showInfoMessage("El producto "+prod.getNmProd()+" fue eliminado correctamente.");
+		}catch (Exception ex){
+			FacesMessageUtil.showErrorMessage("Un error ha ocurrido tratando de eliminar el producto");
+			ex.printStackTrace();
+			return;
+		}		
 	}
 	
 	

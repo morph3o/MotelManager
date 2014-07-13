@@ -1,6 +1,7 @@
 package com.motelmanager.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 import java.util.List;
@@ -15,7 +16,11 @@ public class Factura implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="factura_id_seq",
+                       sequenceName="factura_id_seq",
+                       allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator="factura_id_seq")
 	private Integer id;
 
 	@Column(name="id_factura")
@@ -35,8 +40,8 @@ public class Factura implements Serializable {
 	private List<Entrada> entradas;
 
 	//bi-directional many-to-one association to Proveedor
-	@ManyToOne
-	@JoinColumn(name="id_prov")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="id_prov", referencedColumnName="id_prov")
 	private Proveedor proveedor;
 
 	public Factura() {

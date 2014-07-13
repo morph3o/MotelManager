@@ -6,32 +6,24 @@
 	template="/WEB-INF/layouts/relative_layout_app.xhtml">
 
 	<ui:define name="app_menu">
-		<p:accordionPanel>
-			<p:tab title="Inventario">
-				<h:form>
-					<p:commandButton value="Ver Inventario" id="lista_productos"
-						update=":pcontent" action="toInventario"
-						actionListener="#{routerBean.setNextPage('listaProductos')}"
-						styleClass="ui-priority-primary" style="width: 100%;" />
-					<p:commandButton value="Agregar Producto" id="aregar_producto"
-						update=":pcontent" action="toInventario"
-						actionListener="#{routerBean.setNextPage('addProd')}"
-						styleClass="ui-priority-primary" style="width: 100%;" />
-					<p:commandButton value="Ingresar Productos" id="ingresar_productos"
-						update=":pcontent" action="toInventario"
-						actionListener="#{routerBean.setNextPage('ingresarProds')}"
-						styleClass="ui-priority-primary" style="width: 100%;" />
-					<p:commandButton value="Sacar Productos" id="sacar_productos"
-						update=":pcontent" action="toInventario"
-						actionListener="#{routerBean.setNextPage('sacarProds')}"
-						styleClass="ui-priority-primary" style="width: 100%;" />
-				</h:form>
-			</p:tab>
-			<p:tab title="Facturas">
-			</p:tab>
-		</p:accordionPanel>
+		<h:form>
+			<p:remoteCommand name="verInventario" update=":pcontent" action="toInventario" actionListener="#{routerBean.setNextPage('listaProductos')}" />
+			<p:remoteCommand name="ingresarProd" update=":pcontent" action="toInventario" actionListener="#{routerBean.setNextPage('ingresarProds')}" />
+			<p:remoteCommand name="sacarProd" update=":pcontent" action="toInventario" actionListener="#{routerBean.setNextPage('sacarProds')}" />
+			
+			<ul class="nav metro-nav-list">
+	           <li class="active">
+	              <a href="#">Inventario</a>
+	              <ul class="nav">
+	                <li><a href="#" onclick="verInventario();">Ver Inventario</a></li>
+	                <li><a href="#" onclick="ingresarProd();">Ingresar Productos</a></li>
+	                <li><a href="#" onclick="sacarProd();">Sacar Productos</a></li>
+	              </ul>
+	              <a href="#">Facturación</a>
+	           </li>
+	        </ul>
+        </h:form>
 	</ui:define>
-
 
 	<ui:define name="content">
 		<h1>Bienvenidos</h1>

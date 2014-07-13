@@ -23,10 +23,10 @@
 		<!-- remove or comment this line if you want to use the local fonts -->
 <!--    		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700' rel='stylesheet' type='text/css' /> -->
 		<link rel="stylesheet" type="text/css" href="../css/main_style.css" />
-<!-- 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro.css" /> -->
-<!-- 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-responsive.css" /> -->
-<!-- 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-icons.css" /> -->
-<!-- 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-ui-light.css" /> -->
+ 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro.css" />
+ 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-responsive.css" />
+ 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-icons.css" />
+ 		<link rel="stylesheet" type="text/css" href="../assets/css/bootmetro-ui-light.css" />
 <!-- 		<link rel="stylesheet" type="text/css" href="../assets/css/datepicker.css" /> -->
 		
 <!-- 		Le fav and touch icons -->
@@ -36,32 +36,34 @@
 <!-- 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png" /> -->
 <!-- 		<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png" /> -->
 		
-<!-- 		<script type="text/javascript" src="../assets/js/modernizr-2.6.2.min.js"></script> -->
+ 		<script type="text/javascript" src="../assets/js/modernizr-2.6.2.min.js"></script>
 	</h:head>
 
 	<h:body>
-		<p:layout fullPage="true">
-			<p:layoutUnit id="menu" position="west" size="20%">
-				<p:outputPanel id="menu_content">
-					<ui:insert name="app_menu" />
-				</p:outputPanel>
-			</p:layoutUnit>
-			<p:layoutUnit id="principal_content" position="center">
-				<p:outputPanel id="pcontent">
+		<div class="container-fluid">
+		  <div class="row-fluid">
+			  <div class="span2">
+					<p:outputPanel id="menu_content">
+						<ui:insert name="app_menu" />
+					</p:outputPanel>
+			  </div>
+		  <div class="span10">
+		  		<p:outputPanel id="pcontent">
 					<ui:insert name="content" />
 				</p:outputPanel>
-			</p:layoutUnit>
-		</p:layout>
+		  </div>
+		  </div>
+	   </div>
 
 		<script type="text/javascript" src="../js/main_script.js"></script>
 <!-- 		Bootstrap Metro -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootmetro-charms.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootmetro-icons-ie7.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootmetro-panorama.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootmetro-pivot.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootmetro.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootstrap-datepicker.js"></script> -->
-<!-- 		<script type="text/javascript" src="../assets/js/bootstrap.js"></script> -->
+		<script type="text/javascript" src="../assets/js/bootmetro-charms.js"></script>
+	 		<script type="text/javascript" src="../assets/js/bootmetro-icons-ie7.js"></script>
+	 		<script type="text/javascript" src="../assets/js/bootmetro-panorama.js"></script>
+	 		<script type="text/javascript" src="../assets/js/bootmetro-pivot.js"></script>
+	 		<script type="text/javascript" src="../assets/js/bootmetro.js"></script>
+	 		<script type="text/javascript" src="../assets/js/bootstrap-datepicker.js"></script>
+			<script type="text/javascript" src="../assets/js/bootstrap.js"></script>
 <!-- 		Fin Bootstrap Metro -->
 		
 <!-- 		<script type="text/javascript" src="../assets/js/jquery.mousewheel.min.js"></script> -->

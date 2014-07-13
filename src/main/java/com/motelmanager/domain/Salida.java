@@ -16,7 +16,11 @@ public class Salida implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
+	@SequenceGenerator(name="salidas_id_seq",
+                       sequenceName="salidas_id_seq",
+                       allocationSize=1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+                    generator="salidas_id_seq")
 	private Integer id;
 
 	@Column(name="cant_egreso")

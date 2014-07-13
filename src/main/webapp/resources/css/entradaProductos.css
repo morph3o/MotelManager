@@ -1,0 +1,88 @@
+.formHeader label{
+    float: left;
+    margin-top: 5px;
+    margin-right: 20px;
+}
+
+table.ingresarProdTable {
+    width: 100%;
+}
+
+.ingresarProdTable thead, .ingresarProdTable tbody, .ingresarProdTable tr, .ingresarProdTable td, .ingresarProdTable th { display: block; }
+
+table.ingresarProdTable tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+table.ingresarProdTable thead th {
+    height: 30px;
+    /*text-align: left;*/
+}
+
+table.ingresarProdTable tbody {
+    height: 280px;
+    overflow-y: auto;
+}
+
+table.ingresarProdTable thead {
+    /* fallback */
+}
+
+table.ingresarProdTable tbody td, .ingresarProdTable thead th {
+    /*width: 15%;*/
+    float: left;
+}
+
+/*CABECERA*/
+table.ingresarProdTable th:nth-child(1) {
+    width: 5%;
+}
+
+table.ingresarProdTable th:nth-child(2) {
+    width: 24%;
+}
+
+table.ingresarProdTable th:nth-child(3) {
+    width: 19%;
+}
+
+table.ingresarProdTable th:nth-child(4) {
+    width: 19%;
+}
+
+table.ingresarProdTable th:nth-child(5) {
+    width: 18%;
+}
+
+table.ingresarProdTable th:nth-child(6) {
+    width: 3%;
+}
+
+/*COLUMNAS*/
+table.ingresarProdTable td:nth-child(1) {
+    width: 5%;
+}
+
+table.ingresarProdTable td:nth-child(2) {
+    width: 24.5%;
+}
+
+table.ingresarProdTable td:nth-child(3) {
+    width: 19.2%;
+}
+
+table.ingresarProdTable td:nth-child(4) {
+    width: 19.2%;
+}
+
+table.ingresarProdTable td:nth-child(5) {
+    width: 19%;
+}
+
+table.ingresarProdTable td:nth-child(6) {
+    width: 3%;
+    text-align: center;
+}
