@@ -5,70 +5,71 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/layouts/relative_layout_app.xhtml">
 	
-	<ui:define name="content">						
-		<div class="span12">
-          <h1>Inventario</h1>
-        </div>
-        <div class="span2 offset10">
-			<div class="">
-			    <div class="win-commandlayout">
-			        <a data-toggle="modal" class="win-command" href="#form_add_prod">
-			           <span class="win-commandicon win-commandring icon-plus-5"></span>
-			           <span class="win-label">Agregar Producto</span>
-			        </a>     
-			    </div>
+	<ui:define name="content">
+		<div class="row-fluid">						
+			<div class="span12">
+	          <h1>Inventario</h1>
+	        </div>
+	        <div class="span2 offset10">
+				<div class="">
+				    <div class="win-commandlayout">
+				        <a data-toggle="modal" class="win-command" href="#form_add_prod">
+				           <span class="win-commandicon win-commandring icon-plus-5"></span>
+				           <span class="win-label">Agregar Producto</span>
+				        </a>     
+				    </div>
+				</div>
+	        </div>
+	        <div class="span12" style="margin-left: 0px;">
+				<h:form id="listaProductos">				
+					<p:growl id="growl" showDetail="false" life="2000" widgetVar="growl" />				
+					<p:remoteCommand name="eliminarProd" update=":listaProductos growl" actionListener="#{inventarioBean.eliminarProducto()}"></p:remoteCommand>
+					<p:remoteCommand name="cargarModalUpdateProd" update=":listaProductos :formModificarProd growl" actionListener="#{inventarioBean.cargarModalModificarProducto()}"></p:remoteCommand>
+					<h:dataTable id="lista_productos" value="#{inventarioBean.productos}" var="producto"
+				    			styleClass="table table-hover listaProductosTable"
+				    		    columnClasses="data-columna-id, data-columna-nombre, data-columna-tipo, data-columna-marca, data-columna-cantidad, data-columna-imagen, data-columna-detale" >
+	 
+		    			<h:column>
+		    				<f:facet name="header">ID</f:facet>
+		    				#{producto.idProd}
+		    			</h:column>
+		 
+		    			<h:column>
+		    				<f:facet name="header">Nombre</f:facet>
+		    				#{producto.nmProd}
+		    			</h:column>
+		 
+		    			<h:column>
+		    				<f:facet name="header">Tipo</f:facet>
+		    				#{producto.tipoProd}
+		    			</h:column>
+		 
+		    			<h:column>
+		    				<f:facet name="header">Marca</f:facet>
+		    				#{producto.marca}
+		    			</h:column>
+		    			
+		    			<h:column id="prueba">
+		    				<f:facet name="header">Cantidad</f:facet>
+		    				#{producto.cantProd}
+		    			</h:column>
+		    			
+		    			<h:column headerClass="header-columna-detalle">
+		    				<f:facet name="header">Detalle</f:facet>
+		    				#{producto.detalle}
+		    			</h:column>
+		    			
+		    			<h:column>
+		    				<f:facet name="header">Acción</f:facet>
+		    				<a href="#form_update_prod" data-toggle="modal" onclick="cargarModalUpdateProd([{name:'idProd', value:#{producto.idProd}}]);" class="icon-pen-alt2"></a> | <a href="#" onclick="eliminarProd([{name:'idProd', value:#{producto.idProd}}]);" class="icon-trashcan-2"></a>
+		    			</h:column>
+		 
+		    		</h:dataTable>
+				</h:form>
+				<script>
+					setListaProductosTBodyHeight();
+				</script>
 			</div>
-        </div>
-        <div class="span12" style="margin-left: 0px;">
-			<h:form id="listaProductos">				
-				<p:growl id="growl" showDetail="false" life="2000" widgetVar="growl" />				
-				<p:remoteCommand name="eliminarProd" update=":listaProductos growl" actionListener="#{inventarioBean.eliminarProducto()}"></p:remoteCommand>
-				<p:remoteCommand name="cargarModalUpdateProd" update=":listaProductos :formModificarProd growl" actionListener="#{inventarioBean.cargarModalModificarProducto()}"></p:remoteCommand>
-				<h:dataTable id="lista_productos" value="#{inventarioBean.productos}" var="producto"
-			    			styleClass="table table-hover"
-			    		    columnClasses="data-columna-id, data-columna-nombre, data-columna-tipo, data-columna-marca, data-columna-cantidad, data-columna-imagen, data-columna-detale" >
- 
-	    			<h:column>
-	    				<f:facet name="header">ID</f:facet>
-	    				#{producto.idProd}
-	    			</h:column>
-	 
-	    			<h:column>
-	    				<f:facet name="header">Nombre</f:facet>
-	    				#{producto.nmProd}
-	    			</h:column>
-	 
-	    			<h:column>
-	    				<f:facet name="header">Tipo</f:facet>
-	    				#{producto.tipoProd}
-	    			</h:column>
-	 
-	    			<h:column>
-	    				<f:facet name="header">Marca</f:facet>
-	    				#{producto.marca}
-	    			</h:column>
-	    			
-	    			<h:column id="prueba">
-	    				<f:facet name="header">Cantidad</f:facet>
-	    				#{producto.cantProd}
-	    			</h:column>
-	    			
-	    			<h:column>
-	    				<f:facet name="header">Imagen</f:facet>
-						<img src="http://assets.coca-colacompany.com/87/13/9735fcbc47ef98c62975ad2ce8d5/coca-cola-zero-can-small.png" class="img-rounded img-xs" />
-	    			</h:column>
-	    			
-	    			<h:column headerClass="header-columna-detalle">
-	    				<f:facet name="header">Detalle</f:facet>
-	    				#{producto.detalle}
-	    			</h:column>
-	    			
-	    			<h:column>
-	    				<a href="#form_update_prod" data-toggle="modal" onclick="cargarModalUpdateProd([{name:'idProd', value:#{producto.idProd}}]);" class="icon-pen-alt2"></a> | <a href="#" onclick="eliminarProd([{name:'idProd', value:#{producto.idProd}}]);" class="icon-trashcan-2"></a>
-	    			</h:column>
-	 
-	    		</h:dataTable>
-			</h:form>
 		</div>
 		<!-- MODAL PARA AGREGAR PRODUCTO -->
 		<div id="form_add_prod" class="modal hide fade">

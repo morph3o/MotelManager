@@ -17,14 +17,14 @@
 		                  <div class="control-group">
 		                     <label class="control-label" for="inputEmail">ID Entrada</label>
 		                     <div class="controls">
-		                        <p:inputText id="id_entrada" placeholder="Nombre del producto"
+		                        <p:inputText id="id_entrada" styleClass="form-input" placeholder="Nombre del producto"
 									value="#{entradasBean.idEntrada}" readonly="true"></p:inputText>
 		                     </div>
 		                  </div>
 		                  <div class="control-group">
 		                     <label class="control-label" for="fecha">Fecha</label>
 		                     <div class="controls">
-								<p:calendar id="fecha" value="#{entradasBean.fechaIngreso}" style="margin-left: 33px;" readonlyInput="true" pattern="dd/MM/yyyy" />
+								<p:calendar id="fecha" value="#{entradasBean.fechaIngreso}" styleClass="form-input" style="margin-left: 33px;" readonlyInput="true" pattern="dd/MM/yyyy" />
 		                     </div>
 		                  </div>
 		              </fieldset>
@@ -33,7 +33,7 @@
 		                     <label class="control-label" for="id_factura">ID Factura</label>
 		                     <div class="controls">
 		                        <p:inputText id="id_factura"
-									value="#{entradasBean.idEntrada}" readonly="true"></p:inputText>
+									value="#{entradasBean.idEntrada}" readonly="true" styleClass="form-input"></p:inputText>
 		                     </div>
 		                  </div>
 		                  <div class="control-group">

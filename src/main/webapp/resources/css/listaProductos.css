@@ -29,3 +29,93 @@
 	width: 50px;
 	height: 50px;	
 }
+
+table.listaProductosTable {
+    width: 100%;
+}
+
+.listaProductosTable thead, .listaProductosTable tbody, .listaProductosTable tr, .listaProductosTable td, .listaProductosTable th { display: block; }
+
+table.listaProductosTable tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+table.listaProductosTable thead th {
+    height: 30px;
+    /*text-align: left;*/
+}
+
+table.listaProductosTable tbody {
+    overflow-y: auto;
+}
+
+table.listaProductosTable thead {
+    /* fallback */
+}
+
+table.listaProductosTable tbody td, .listaProductosTable thead th {
+    /*width: 15%;*/
+    float: left;
+}
+
+/*CABECERA*/
+table.listaProductosTable th:nth-child(1) {
+    width: 5%;
+}
+
+table.listaProductosTable th:nth-child(2) {
+    width: 21%;
+}
+
+table.listaProductosTable th:nth-child(3) {
+    width: 10%;
+}
+
+table.listaProductosTable th:nth-child(4) {
+    width: 15%;
+}
+
+table.listaProductosTable th:nth-child(5) {
+    width: 10%;
+}
+
+table.listaProductosTable th:nth-child(6) {
+    width: 20%;
+}
+
+table.listaProductosTable th:nth-child(7) {
+    width: 5%;
+}
+
+/*COLUMNAS*/
+table.listaProductosTable td:nth-child(1) {
+    width: 5%;
+}
+
+table.listaProductosTable td:nth-child(2) {
+    width: 21.5%;
+}
+
+table.listaProductosTable td:nth-child(3) {
+    width: 10.2%;
+}
+
+table.listaProductosTable td:nth-child(4) {
+    width: 15.2%;
+}
+
+table.listaProductosTable td:nth-child(5) {
+    width: 10%;
+}
+
+table.listaProductosTable td:nth-child(6) {
+    width: 20%;
+}
+
+table.listaProductosTable td:nth-child(7) {
+    width: 5%;
+    text-align: center;
+}
