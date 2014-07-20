@@ -23,7 +23,6 @@ table.ingresarProdTable thead th {
 }
 
 table.ingresarProdTable tbody {
-    height: 280px;
     overflow-y: auto;
 }
 

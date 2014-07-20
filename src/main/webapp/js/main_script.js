@@ -11,3 +11,11 @@ function setListaProductosTBodyHeight(){
 	});
 }
 /* End Setting */
+
+/* Setting the height of the lista productos table of Ingresar Productos */
+function setLPTBodyHeight(tableID, footerID){
+	jQuery("#"+tableID+" tbody").height(function(){
+		return (jQuery(window).height() - jQuery("#"+tableID).position().top) - jQuery("#"+footerID).height() - 139;
+	});
+}
+/* End Setting */

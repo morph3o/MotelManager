@@ -73,11 +73,14 @@
 	                </h:dataTable>
 		        </div>
 	        </h:form>
-	        <div class="span12 form-actions" style="margin-left: 0px;">
+	        <div id="footer-confirmacion" class="span12 form-actions" style="margin-left: 0px;">
 	          <button type="submit" class="btn btn-primary pull-right" data-toggle="modal" href="#confirmar_retiro" style="margin-left: 5px;">Confirmar</button>	
 	          <button type="button" class="btn pull-right" data-toggle="modal" href="#confirmar_limpiar">Limpiar</button>	          
 	        </div>
 		</div>
+		<script>	
+        	setLPTBodyHeight('tablaProductosEntrada','footer-confirmacion');
+        </script>
 		<!-- MODAL AGREGAR PRODUCTO -->
         <div id="form_add_prod" class="modal hide fade">
 	        <div class="modal-header">

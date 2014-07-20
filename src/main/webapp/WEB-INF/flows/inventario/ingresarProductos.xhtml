@@ -44,9 +44,9 @@
 		              </fieldset>
 		        </div>
 		        <div class="span12" style="margin-left: 0px;">						                
-	                <p:remoteCommand name="eliminarProdLista" update="growl :listaProductos:tablaProductosEntrada" actionListener="#{entradasBean.eliminarProductoDesdeEntrada}"></p:remoteCommand>
-	                <p:remoteCommand name="ingresarEntrada" update=":listaProductos growl" oncomplete="jQuery('#confirmar_ingreso').modal('hide');" actionListener="#{entradasBean.ingresarEntradas}"></p:remoteCommand>
-	                <p:remoteCommand name="limpiarEntrada" update=":listaProductos growl" oncomplete="jQuery('#confirmar_limpiar').modal('hide');" actionListener="#{entradasBean.init}"></p:remoteCommand>	                
+	                <p:remoteCommand name="eliminarProdLista" update="growl :listaProductos:tablaProductosEntrada" oncomplete="setLPTBodyHeight('tablaProductosEntrada','footer-confirmacion');" actionListener="#{entradasBean.eliminarProductoDesdeEntrada}"></p:remoteCommand>
+	                <p:remoteCommand name="ingresarEntrada" update=":listaProductos growl" oncomplete="jQuery('#confirmar_ingreso').modal('hide'); setLPTBodyHeight('tablaProductosEntrada','footer-confirmacion');" actionListener="#{entradasBean.ingresarEntradas}"></p:remoteCommand>
+	                <p:remoteCommand name="limpiarEntrada" update=":listaProductos growl" oncomplete="jQuery('#confirmar_limpiar').modal('hide'); setLPTBodyHeight('tablaProductosEntrada','footer-confirmacion');" actionListener="#{entradasBean.init}"></p:remoteCommand>	                
 	                <h:dataTable id="tablaProductosEntrada" value="#{entradasBean.listaEntradas}" var="entrada"
 	                            styleClass="table table-hover table-condensed ingresarProdTable" >
 	                    <h:column>
@@ -81,11 +81,14 @@
 	                </h:dataTable>	                        
 		        </div>
 	        </h:form>
-	        <div class="span12 form-actions" style="margin-left: 0px;">
+	        <div id="footer-confirmacion" class="span12 form-actions" style="margin-left: 0px;">
 	          <button type="submit" class="btn btn-primary pull-right" data-toggle="modal" href="#confirmar_ingreso" style="margin-left: 5px;">Confirmar</button>	
 	          <button type="button" class="btn pull-right" data-toggle="modal" href="#confirmar_limpiar">Limpiar</button>	          
 	        </div>
         </div>
+        <script>
+        	setLPTBodyHeight('tablaProductosEntrada','footer-confirmacion');
+        </script>
         <!-- MODAL AGREGAR PRODUCTO -->
         <div id="form_add_prod" class="modal hide fade">
 	        <div class="modal-header">
@@ -95,7 +98,7 @@
 	        </div>
 	        <div class="modal-body" style="overflow: hidden;">
 	            <h:form class="form-horizontal">
-	              <p:remoteCommand name="agregarProdLista" update=":listaProductos:tablaProductosEntrada :listaProductos:growl" onsuccess="jQuery('#form_add_prod').modal('hide');" actionListener="#{entradasBean.cargarProductoALista}"></p:remoteCommand>	
+	              <p:remoteCommand name="agregarProdLista" update=":listaProductos:tablaProductosEntrada :listaProductos:growl" oncomplete="setLPTBodyHeight('tablaProductosEntrada','footer-confirmacion');" onsuccess="jQuery('#form_add_prod').modal('hide');" actionListener="#{entradasBean.cargarProductoALista}"></p:remoteCommand>	
 	              <div class="control-group">
 	                 <label class="control-label" for="lista_prods">Producto</label>
 	                 <div class="controls">

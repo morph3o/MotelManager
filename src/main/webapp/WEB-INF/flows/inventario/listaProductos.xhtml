@@ -23,8 +23,8 @@
 	        <div class="span12" style="margin-left: 0px;">
 				<h:form id="listaProductos">				
 					<p:growl id="growl" showDetail="false" life="2000" widgetVar="growl" />				
-					<p:remoteCommand name="eliminarProd" update=":listaProductos growl" actionListener="#{inventarioBean.eliminarProducto()}"></p:remoteCommand>
-					<p:remoteCommand name="cargarModalUpdateProd" update=":listaProductos :formModificarProd growl" actionListener="#{inventarioBean.cargarModalModificarProducto()}"></p:remoteCommand>
+					<p:remoteCommand name="eliminarProd" update=":listaProductos growl" oncomplete="setListaProductosTBodyHeight();" actionListener="#{inventarioBean.eliminarProducto()}"></p:remoteCommand>
+					<p:remoteCommand name="cargarModalUpdateProd" update=":listaProductos :formModificarProd growl" oncomplete="setListaProductosTBodyHeight();" actionListener="#{inventarioBean.cargarModalModificarProducto()}"></p:remoteCommand>
 					<h:dataTable id="lista_productos" value="#{inventarioBean.productos}" var="producto"
 				    			styleClass="table table-hover listaProductosTable"
 				    		    columnClasses="data-columna-id, data-columna-nombre, data-columna-tipo, data-columna-marca, data-columna-cantidad, data-columna-imagen, data-columna-detale" >
@@ -81,7 +81,7 @@
 			<div class="modal-body" style="overflow: hidden;">
 	        	<h:form id="formAgregarProd" styleClass="form-horizontal">
 	        		<p:remoteCommand name="limpiarForm" update=":formAgregarProd" actionListener="#{inventarioBean.iniciarProducto()}"></p:remoteCommand>
-	    			<p:remoteCommand name="ingresarProducto" update=":formAgregarProd :listaProductos" onsuccess="jQuery('#form_add_prod').modal('hide');" actionListener="#{inventarioBean.insertarProducto()}"></p:remoteCommand>
+	    			<p:remoteCommand name="ingresarProducto" update=":formAgregarProd :listaProductos" oncomplete="setListaProductosTBodyHeight();" onsuccess="jQuery('#form_add_prod').modal('hide');" actionListener="#{inventarioBean.insertarProducto()}"></p:remoteCommand>
 	        	
 					<div class="control-group">
 					   <label class="control-label" for="id_producto">ID</label>
@@ -138,7 +138,7 @@
 	        </div>
 			<div class="modal-body" style="overflow: hidden;">
 	        	<h:form id="formModificarProd" styleClass="form-horizontal">
-	    			<p:remoteCommand name="modificarProducto" update=":formModificarProd :listaProductos" onsuccess="jQuery('#form_update_prod').modal('hide');" actionListener="#{inventarioBean.modificarProducto()}"></p:remoteCommand>
+	    			<p:remoteCommand name="modificarProducto" update=":formModificarProd :listaProductos" oncomplete="setListaProductosTBodyHeight();" onsuccess="jQuery('#form_update_prod').modal('hide');" actionListener="#{inventarioBean.modificarProducto()}"></p:remoteCommand>
 	        	
 					<div class="control-group">
 					   <label class="control-label" for="id_producto">ID</label>
