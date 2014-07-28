@@ -1,0 +1,36 @@
+-- Converted by db_converter
+START TRANSACTION;
+SET standard_conforming_strings=off;
+SET escape_string_warning=off;
+SET CONSTRAINTS ALL DEFERRED;
+
+CREATE TABLE "persona" (
+    "id" integer NOT NULL,
+    "id_persona" varchar(100) NOT NULL,
+    "nombre" varchar(100) NOT NULL,
+    "ape_paterno" varchar(100) NOT NULL,
+    "ape_materno" varchar(100) NOT NULL,
+    "email" varchar(100) NOT NULL,
+    "telefono" varchar(100) NOT NULL,
+    PRIMARY KEY ("id"),
+    UNIQUE ("id_persona")
+);
+
+INSERT INTO "persona" VALUES (1,'16.349.603-8','Piero','Divasto','Martinez','pdivasto@gmail.com','56996191517'),(2,'8.031.069-2','Maria','Martinez','Farias','morph3o@gmail.com','234234');
+
+-- Post-data save --
+COMMIT;
+START TRANSACTION;
+
+-- Typecasts --
+
+-- Foreign keys --
+
+-- Sequences --
+CREATE SEQUENCE persona_id_seq;
+SELECT setval('persona_id_seq', max(id)) FROM persona;
+ALTER TABLE "persona" ALTER COLUMN "id" SET DEFAULT nextval('persona_id_seq');
+
+-- Full Text keys --
+
+COMMIT;

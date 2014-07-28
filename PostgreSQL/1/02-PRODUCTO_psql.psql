@@ -1,0 +1,37 @@
+-- Converted by db_converter
+START TRANSACTION;
+SET standard_conforming_strings=off;
+SET escape_string_warning=off;
+SET CONSTRAINTS ALL DEFERRED;
+
+CREATE TABLE "producto" (
+    "id" integer NOT NULL,
+    "id_prod" integer NOT NULL,
+    "nm_prod" varchar(200) NOT NULL,
+    "tipo_prod" varchar(200) DEFAULT NULL,
+    "marca" varchar(100) DEFAULT NULL,
+    "cant_prod" integer DEFAULT NULL,
+    "imagen" varchar(400) DEFAULT NULL,
+    "detalle" varchar(400) DEFAULT NULL,
+    PRIMARY KEY ("id","id_prod"),
+    UNIQUE ("id_prod")
+);
+
+INSERT INTO "producto" VALUES (8,1000,'Coca-Cola Zero',NULL,'Coca-Cola Company',0,'',''),(9,1001,'Coca-Cola Light',NULL,'Coca Cola Company',0,'',''),(10,1002,'Coca-Cola',NULL,'Coca-Cola Company',0,'',''),(11,1003,'Fanta',NULL,'Coca-Cola Company',0,'',''),(12,1004,'Sprite',NULL,'Coca-Cola Company',0,'',''),(13,1005,'Mineral c/ Gas',NULL,'',0,'',''),(14,1006,'Mineral s/Gas',NULL,'',0,'',''),(15,1007,'Ginger Ale',NULL,'',0,'',''),(16,1008,'Agua Tónica',NULL,'',0,'',''),(17,1009,'Cristal Botellín 250cc',NULL,'CCU',0,'',''),(18,1010,'Baltica Tarro',NULL,'',0,'',''),(19,1011,'Carta Blanca Tarro',NULL,'',0,'',''),(20,1012,'Corona Botell',NULL,'Corona',0,'',''),(21,1013,'Cristal Tarro',NULL,'CCU',0,'',''),(22,1014,'Energética',NULL,'',0,'','El nombre es muy genérico, debe ser modificado por el nombre del producto original.'),(23,1015,'Paceña',NULL,'',0,'',''),(24,1016,'Heineken',NULL,'',0,'',''),(25,1017,'Pisco Capel 750/35º',NULL,'',0,'',''),(26,1018,'Control 750/35º',NULL,'',0,'',''),(27,1019,'Campanario 750/35º',NULL,'',0,'',''),(28,1020,'Cochiguas 750/35º',NULL,'',0,'',''),(29,1021,'Alto del Carmen 750cc',NULL,'',0,'',''),(30,1022,'Champagne 750cc',NULL,'',0,'',''),(31,1023,'Ron Havana',NULL,'',0,'',''),(32,1024,'Ron Stelar 700cc',NULL,'',0,'',''),(33,1025,'Ron Abuelo',NULL,'',0,'',''),(34,1026,'Vodka Stolichnaya 1000cc',NULL,'',0,'',''),(35,1027,'Vodka Eristoff 750cc',NULL,'',0,'',''),(36,1028,'Gin Booth 1000cc',NULL,'',0,'',''),(37,1029,'Menta 1000cc',NULL,'',0,'',''),(38,1030,'Tequila 750cc',NULL,'',0,'',''),(39,1031,'Martini Rosso 900cc',NULL,'',0,'',''),(40,1032,'Vermouth 900cc',NULL,'',0,'',''),(41,1033,'Cognac El Gaitero 750',NULL,'',0,'',''),(42,1034,'Cacao Duval 750cc',NULL,'',0,'',''),(43,1035,'Vino Dulce',NULL,'',0,'',''),(44,1036,'Granadina Mitjan''s 900cc',NULL,'',0,'',''),(45,1037,'Whisky Ballantine 1000cc',NULL,'',0,'',''),(46,1038,'Whisky Johnnie Walker 750cc',NULL,'',0,'',''),(47,1039,'Whisky Glen Niven 750cc',NULL,'',0,'',''),(48,1040,'Whisky Chivas Regal 12 750cc',NULL,'',0,'',''),(49,1041,'Ron Mitjan''s Blanco 750cc',NULL,'',0,'',''),(50,1042,'Manquehuito',NULL,'',0,'',''),(51,1043,'Vino Chico',NULL,'',0,'',''),(52,1044,'Shampoo',NULL,'',0,'',''),(53,1045,'Confort',NULL,'',0,'',''),(54,1046,'Jabón',NULL,'',0,'',''),(55,1047,'Quick',NULL,'',0,'',''),(56,1048,'Detergente',NULL,'',0,'',''),(57,1050,'Cloro',NULL,'',0,'',''),(58,1051,'Insecticida',NULL,'',0,'',''),(59,1052,'Desodorante',NULL,'',0,'',''),(60,1053,'Lustra Muebles',NULL,'',0,'',''),(61,1054,'Cloro Gel',NULL,'',0,'',''),(62,1055,'Antigrasa',NULL,'',0,'',''),(63,1056,'Purex',NULL,'',0,'',''),(64,1057,'Bolsa Basura',NULL,'',0,'',''),(65,1058,'Limpia Vidrio',NULL,'',0,'',''),(66,1059,'Lysol',NULL,'',0,'',''),(67,1060,'Cera',NULL,'',0,'',''),(68,1061,'Papas Fritas',NULL,'',0,'',''),(69,1062,'Maní Salado',NULL,'',0,'',''),(70,1063,'Chocolates',NULL,'',0,'',''),(71,1064,'Preservativos',NULL,'',0,'',''),(72,1065,'Servilletas',NULL,'',0,'',''),(73,1066,'Cigarrillos 20',NULL,'',0,'',''),(74,1067,'Cigarrillos 10',NULL,'',0,'',''),(75,1068,'Durazno 1500cc',NULL,'',0,'',''),(76,1069,'Naranja 1500cc',NULL,'',0,'',''),(77,1070,'Piña 1500cc',NULL,'',0,'',''),(78,1071,'Tutti Frutti',NULL,'',0,'',''),(79,1072,'Damasco 1500cc',NULL,'',0,'',''),(80,1073,'Manzana',NULL,'',0,'',''),(81,1074,'Fosforos',NULL,'',0,'',''),(82,1075,'Piña Colada',NULL,'',0,'',''),(83,1076,'Cañitas',NULL,'',0,'',''),(84,1077,'Jabón B.',NULL,'',0,'','');
+
+-- Post-data save --
+COMMIT;
+START TRANSACTION;
+
+-- Typecasts --
+
+-- Foreign keys --
+
+-- Sequences --
+CREATE SEQUENCE producto_id_seq;
+SELECT setval('producto_id_seq', max(id)) FROM producto;
+ALTER TABLE "producto" ALTER COLUMN "id" SET DEFAULT nextval('producto_id_seq');
+
+-- Full Text keys --
+
+COMMIT;

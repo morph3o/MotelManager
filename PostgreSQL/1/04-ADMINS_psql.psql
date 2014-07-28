@@ -1,0 +1,32 @@
+-- Converted by db_converter
+START TRANSACTION;
+SET standard_conforming_strings=off;
+SET escape_string_warning=off;
+SET CONSTRAINTS ALL DEFERRED;
+
+CREATE TABLE "admins" (
+    "id" integer NOT NULL,
+    "id_persona" varchar(100) NOT NULL DEFAULT '',
+    "clave" varchar(200) NOT NULL,
+    PRIMARY KEY ("id")
+);
+
+
+-- Post-data save --
+COMMIT;
+START TRANSACTION;
+
+-- Typecasts --
+
+-- Foreign keys --
+ALTER TABLE "admins" ADD CONSTRAINT "admins_ibfk_1" FOREIGN KEY ("id_persona") REFERENCES "persona" ("id_persona") DEFERRABLE INITIALLY DEFERRED;
+CREATE INDEX ON "admins" ("id_persona");
+
+-- Sequences --
+CREATE SEQUENCE admins_id_seq;
+SELECT setval('admins_id_seq', max(id)) FROM admins;
+ALTER TABLE "admins" ALTER COLUMN "id" SET DEFAULT nextval('admins_id_seq');
+
+-- Full Text keys --
+
+COMMIT;
