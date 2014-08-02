@@ -1,6 +1,8 @@
 package com.motelmanager.repository;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,16 +10,20 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.motelmanager.domain.DetalleEntrada;
+import com.motelmanager.domain.DetalleSalida;
 import com.motelmanager.domain.Entrada;
 import com.motelmanager.domain.Factura;
 import com.motelmanager.domain.Producto;
 import com.motelmanager.domain.Salida;
+import com.motelmanager.util.DateTool;
 
 public class JPASalidaDAOTest {
 	private ApplicationContext appCtx;
 	private SalidaDAO salidaDAO;
 	private ProductoDAO prodDAO;
 	private FacturaDAO facturaDAO;
+	private DetalleSalidaDAO detalleSalidaDAO;
 	
 	@Before
 	public void setUp(){
@@ -25,37 +31,109 @@ public class JPASalidaDAOTest {
 		salidaDAO = (SalidaDAO) appCtx.getBean("salidaDAO");
 		prodDAO = (ProductoDAO) appCtx.getBean("productoDAO");
 		facturaDAO = (FacturaDAO) appCtx.getBean("facturaDAO");
+		detalleSalidaDAO = (DetalleSalidaDAO) appCtx.getBean("detalleSalidaDAO");
+		ingresarTestProductos();
+	}
+	
+	private void ingresarTestProductos(){
+		Producto prod1 = new Producto();
+		prod1.setIdProd(1);
+		prod1.setNmProd("Producto 1");
+		prod1.setTipoProd("Tipo producto 1");
+		prod1.setMarca("Marca Producto 1");
+		prod1.setCantProd(10);
+		prod1.setDetalle("Detalle producto 1");
+		prod1.setImagen("imagen producto 1");
+		
+		prodDAO.saveProducto(prod1);
+		
+		Producto prod2 = new Producto();
+		prod2.setIdProd(2);
+		prod2.setNmProd("Producto 2");
+		prod2.setTipoProd("Tipo producto 2");
+		prod2.setMarca("Marca Producto 2");
+		prod2.setCantProd(10);
+		prod2.setDetalle("Detalle producto 2");
+		prod2.setImagen("imagen producto 2");
+		
+		prodDAO.saveProducto(prod2);
 	}
 	
 	@Test
-	public void testIngresoProductos(){
-		int idEntrada = 6;
+	public void testSalidaProductos(){
+		// Traemos los productos que estan en la base de datos
+		Producto prod1 = prodDAO.obtenerProducto(1);
+		Producto prod2 = prodDAO.obtenerProducto(2);
 		
-		Salida salida1 = new Salida();
+		// Primero creamos una entrada
+		Salida salida = new Salida();
 		
-		Producto prod1 = this.prodDAO.obtenerProducto(100);
-//		Producto prod1 = new Producto();
-//		prod1.setIdProd(100);
-//		prod1.setNmProd("Prueba");
-//		prod1.setCantProd(200);
+		// Seteamos los datos de la entrada 
+		salida.setIdSalida(1);
+		salida.setPersona(null);
+		salida.setFechaEgreso(new Date());
+		salida.setCantProdSac(2); // La entrada será de dos productos
 		
-		Assert.assertNotNull(prod1);
+		// Creamos el detalle correspondiente a la salida
+		DetalleSalida detalleSalida1 = new DetalleSalida();
+		detalleSalida1.setCantExtAnt(prod1.getCantProd());
+		detalleSalida1.setCantExtDesp(prod1.getCantProd() - 10);
+		detalleSalida1.setCantSalida(10);
+		prod1.setCantProd(0);
+		detalleSalida1.setProducto(prod1);
 		
-		System.out.println(prod1.getIdProd());
+		// Modificamos la cantidad de productos en el stock
+		prodDAO.modificarProducto(prod1);
 		
-		Factura factura1 = null; 
+		// Creamos el detalle correspondiente a la salida
+		DetalleSalida detalleSalida2 = new DetalleSalida();
+		detalleSalida2.setCantExtAnt(prod2.getCantProd());
+		detalleSalida2.setCantExtDesp(prod2.getCantProd() - 10);
+		detalleSalida2.setCantSalida(10);
+		prod1.setCantProd(0);
+		detalleSalida2.setProducto(prod2);
 		
-		salida1.setIdSalida(idEntrada);
-		salida1.setFechaEgreso(new Date());
-		salida1.setProducto(prod1);
-		salida1.setCantEgreso(10);
-		salida1.setCantExtAnt(prod1.getCantProd());
-		int nuevaCant = prod1.getCantProd()-salida1.getCantEgreso();
-		salida1.setCantExtDesp(nuevaCant);
-				
-		prod1.setCantProd(nuevaCant);
+		// Modificamos la cantidad de productos en el stock
+		prodDAO.modificarProducto(prod2);
 		
-		this.prodDAO.modificarProducto(prod1);
-		this.salidaDAO.ingresarSalida(salida1);
+		List<DetalleSalida> listaDetalle = new ArrayList<DetalleSalida>();
+		listaDetalle.add(detalleSalida1);
+		listaDetalle.add(detalleSalida2);
+		
+		// Enlazamos los detalles con la salida
+		salida.setDetalleSalidas(listaDetalle);
+		
+		// Enlazamos la salida a cada uno de los detalles
+		detalleSalida1.setSalida(salida);
+		detalleSalida2.setSalida(salida);
+		
+		// Persistimos la salida
+		salidaDAO.ingresarSalida(salida);		
+		
+		// Persistimos los detalles
+		detalleSalidaDAO.ingresarDetalleSalida(detalleSalida1);
+		detalleSalidaDAO.ingresarDetalleSalida(detalleSalida2);
+		
+		Salida salidaTest = new Salida();
+		
+		salidaTest = salidaDAO.obtenerSalida(1);
+		
+		// Verificamos que la salida exista
+		Assert.assertNotNull(salidaTest);
+		// Verifcamos que el id sea 1
+		Assert.assertEquals(1, salidaTest.getIdSalida());
+		// Verificamos que la cantidad de productos ingresados sea 2
+		Assert.assertEquals(2, salidaTest.getCantProdSac());
+		// Verificamos que la fecha es la de hoy
+		Assert.assertEquals(DateTool.dateToStringWithFormat(new Date(), "yyyy-MM-dd"), DateTool.dateToStringWithFormat(salidaTest.getFechaEgreso(), "yyyy-MM-dd"));
+		
+		// Al final eliminamos los datos de prueba que se ingresaron a la base de datos
+		detalleSalidaDAO.eliminarDetalleSalida(detalleSalida1);
+		detalleSalidaDAO.eliminarDetalleSalida(detalleSalida2);
+		
+		salidaDAO.eliminarSalida(salidaTest);
+		
+		prodDAO.removerProducto(prod1);
+		prodDAO.removerProducto(prod2);
 	}
 }
