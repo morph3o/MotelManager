@@ -6,4 +6,5 @@ public interface SalidaDAO {
 	public void ingresarSalida(Salida salida);
 	public void eliminarSalida(Salida salida);
 	public int obtenerUltimaIDSalida();
+	public Salida obtenerSalida(int idSalida);
 }

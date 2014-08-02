@@ -37,7 +37,7 @@ public class Factura implements Serializable {
 
 	//bi-directional many-to-one association to Entrada
 	@OneToMany(mappedBy="factura")
-	private List<Entrada> entradas;
+	private List<Entrada> entrada;
 
 	//bi-directional many-to-one association to Proveedor
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -88,11 +88,11 @@ public class Factura implements Serializable {
 	}
 
 	public List<Entrada> getEntradas() {
-		return this.entradas;
+		return this.entrada;
 	}
 
 	public void setEntradas(List<Entrada> entradas) {
-		this.entradas = entradas;
+		this.entrada = entradas;
 	}
 
 	public Proveedor getProveedor() {

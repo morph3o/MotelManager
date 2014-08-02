@@ -7,4 +7,5 @@ public interface EntradaDAO {
 	public void eliminarEntrada(Entrada entrada);
 	public void modificarEntrada(Entrada entrada);
 	public int obtenerUltimaIDEntrada();
+	public Entrada obtenerEntrada(int idEntrada);
 }

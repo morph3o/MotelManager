@@ -1,9 +1,11 @@
 package com.motelmanager.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -11,26 +13,20 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="salidas")
+@Table(name="salida")
 public class Salida implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="salidas_id_seq",
-                       sequenceName="salidas_id_seq",
+	@SequenceGenerator(name="salida_id_seq",
+                       sequenceName="salida_id_seq",
                        allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-                    generator="salidas_id_seq")
+                    generator="salida_id_seq")
 	private Integer id;
 
-	@Column(name="cant_egreso")
-	private int cantEgreso;
-
-	@Column(name="cant_ext_ant")
-	private int cantExtAnt;
-
-	@Column(name="cant_ext_desp")
-	private int cantExtDesp;
+	@Column(name="cant_prod_sac")
+	private int cantProdSac;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_egreso")
@@ -38,11 +34,10 @@ public class Salida implements Serializable {
 
 	@Column(name="id_salida")
 	private int idSalida;
-
-	//bi-directional many-to-one association to Producto
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_prod", referencedColumnName="id_prod")
-	private Producto producto;
+	
+	//bi-directional many-to-one association to DetalleSalida
+	@OneToMany(mappedBy="salida")
+	private List<DetalleSalida> detalleSalidas;
 
 	//bi-directional many-to-one association to Persona
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -58,30 +53,6 @@ public class Salida implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public int getCantEgreso() {
-		return this.cantEgreso;
-	}
-
-	public void setCantEgreso(int cantEgreso) {
-		this.cantEgreso = cantEgreso;
-	}
-
-	public int getCantExtAnt() {
-		return this.cantExtAnt;
-	}
-
-	public void setCantExtAnt(int cantExtAnt) {
-		this.cantExtAnt = cantExtAnt;
-	}
-
-	public int getCantExtDesp() {
-		return this.cantExtDesp;
-	}
-
-	public void setCantExtDesp(int cantExtDesp) {
-		this.cantExtDesp = cantExtDesp;
 	}
 
 	public Date getFechaEgreso() {
@@ -100,20 +71,28 @@ public class Salida implements Serializable {
 		this.idSalida = idSalida;
 	}
 
-	public Producto getProducto() {
-		return this.producto;
-	}
-
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
-
 	public Persona getPersona() {
 		return this.persona;
 	}
 
 	public void setPersona(Persona persona) {
 		this.persona = persona;
+	}
+
+	public int getCantProdSac() {
+		return cantProdSac;
+	}
+
+	public void setCantProdSac(int cantProdSac) {
+		this.cantProdSac = cantProdSac;
+	}
+
+	public List<DetalleSalida> getDetalleSalidas() {
+		return detalleSalidas;
+	}
+
+	public void setDetalleSalidas(List<DetalleSalida> detalleSalidas) {
+		this.detalleSalidas = detalleSalidas;
 	}
 
 }

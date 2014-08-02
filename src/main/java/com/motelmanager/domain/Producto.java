@@ -1,6 +1,7 @@
 package com.motelmanager.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 import java.util.List;
@@ -42,16 +43,16 @@ public class Producto implements Serializable {
 	private String tipoProd;
 
 	//bi-directional many-to-one association to DetalleFactura
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="producto")
+	@OneToMany(mappedBy="producto")
 	private List<DetalleFactura> detalleFacturas;
 
-	//bi-directional many-to-one association to Entrada
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="producto")
-	private List<Entrada> entradas;
+	//bi-directional many-to-one association to DetalleEntrada
+	@OneToMany(mappedBy="producto")
+	private List<DetalleEntrada> detalleEntradas;
 
-	//bi-directional many-to-one association to Salida
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="producto")
-	private List<Salida> salidas;
+	//bi-directional many-to-one association to DetalleSalida
+	@OneToMany(mappedBy="producto")
+	private List<DetalleSalida> detalleSalidas;
 
 	public Producto() {
 	}
@@ -128,20 +129,23 @@ public class Producto implements Serializable {
 		this.detalleFacturas = detalleFacturas;
 	}
 
-	public List<Entrada> getEntradas() {
-		return this.entradas;
+	public List<DetalleEntrada> getDetalleEntradas() {
+		return detalleEntradas;
 	}
 
-	public void setEntradas(List<Entrada> entradas) {
-		this.entradas = entradas;
+	public void setDetalleEntradas(List<DetalleEntrada> detalleEntradas) {
+		this.detalleEntradas = detalleEntradas;
 	}
 
-	public List<Salida> getSalidas() {
-		return this.salidas;
+	public List<DetalleSalida> getDetalleSalidas() {
+		return detalleSalidas;
 	}
 
-	public void setSalidas(List<Salida> salidas) {
-		this.salidas = salidas;
+	public void setDetalleSalidas(List<DetalleSalida> detalleSalidas) {
+		this.detalleSalidas = detalleSalidas;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
 }

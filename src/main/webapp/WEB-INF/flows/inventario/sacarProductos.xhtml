@@ -36,39 +36,39 @@
 		              </fieldset>
 		        </div>
 		        <div class="span12" style="margin-left: 0px;">
-		        	<p:remoteCommand name="eliminarProdLista" update="growl :salidaProductos:tablaProductosEntrada" actionListener="#{salidasBean.eliminarProductoDesdeEntrada}"></p:remoteCommand>
-		        	<p:remoteCommand name="ingresarRetiro" update=":salidaProductos growl" oncomplete="jQuery('#confirmar_retiro').modal('hide');" actionListener="#{salidasBean.ingresarSalidas}"></p:remoteCommand>
-		        	<p:remoteCommand name="limpiarSalida" update=":salidaProductos growl" oncomplete="jQuery('#confirmar_limpiar').modal('hide');" actionListener="#{salidasBean.init}"></p:remoteCommand>
-		        	<h:dataTable id="tablaProductosEntrada" value="#{salidasBean.listaSalidas}" var="salida"
+		        	<p:remoteCommand name="eliminarProdLista" update="growl :salidaProductos:tablaProductosSalida" oncomplete="setLPTBodyHeight('tablaProductosSalida','footer-confirmacion');" actionListener="#{salidasBean.eliminarProductoDesdeEntrada}"></p:remoteCommand>
+		        	<p:remoteCommand name="ingresarRetiro" update=":salidaProductos growl" oncomplete="jQuery('#confirmar_retiro').modal('hide'); setLPTBodyHeight('tablaProductosSalida','footer-confirmacion');" actionListener="#{salidasBean.ingresarSalidas}"></p:remoteCommand>
+		        	<p:remoteCommand name="limpiarSalida" update=":salidaProductos growl" oncomplete="jQuery('#confirmar_limpiar').modal('hide'); setLPTBodyHeight('tablaProductosSalida','footer-confirmacion');" actionListener="#{salidasBean.init}"></p:remoteCommand>
+		        	<h:dataTable id="tablaProductosSalida" value="#{salidasBean.detalleSalida}" var="detalleSalida"
 	                            styleClass="table table-hover table-condensed ingresarProdTable" >
 	                    <h:column>
 	                        <f:facet name="header">ID</f:facet>
-	                        #{salida.producto.idProd}
+	                        #{detalleSalida.producto.idProd}
 	                    </h:column>
 	
 	                    <h:column>
 	                        <f:facet name="header">Nombre</f:facet>
-	                        #{salida.producto.nmProd}
+	                        #{detalleSalida.producto.nmProd}
 	                    </h:column>
 	
 	                    <h:column>
 	                        <f:facet name="header">Stock</f:facet>
-	                        #{salida.cantExtAnt}
+	                        #{detalleSalida.cantExtAnt}
 	                    </h:column>
 	
 	                    <h:column>
 	                        <f:facet name="header">Egreso</f:facet>
-	                        #{salida.cantEgreso}
+	                        #{detalleSalida.cantSalida}
 	                    </h:column>
 	
 	                    <h:column id="prueba">
 	                        <f:facet name="header">Stock Futuro</f:facet>
-	                        #{salida.cantExtDesp}
+	                        #{detalleSalida.cantExtDesp}
 	                    </h:column>
 	
 	                    <h:column>
 	                        <f:facet name="header">Acción</f:facet>
-	                        <a href="#" onclick="eliminarProdLista([{name:'idProd', value:#{salida.producto.idProd}}]);" class="icon-trashcan-2"></a>
+	                        <a href="#" onclick="eliminarProdLista([{name:'idProd', value:#{detalleSalida.producto.idProd}}]);" class="icon-trashcan-2"></a>
 	                    </h:column>
 	                </h:dataTable>
 		        </div>
@@ -79,7 +79,7 @@
 	        </div>
 		</div>
 		<script>	
-        	setLPTBodyHeight('tablaProductosEntrada','footer-confirmacion');
+        	setLPTBodyHeight('tablaProductosSalida','footer-confirmacion');
         </script>
 		<!-- MODAL AGREGAR PRODUCTO -->
         <div id="form_add_prod" class="modal hide fade">
@@ -90,7 +90,7 @@
 	        </div>
 	        <div class="modal-body" style="overflow: hidden;">
 	            <h:form class="form-horizontal">
-	              <p:remoteCommand name="agregarProdLista" update=":salidaProductos:tablaProductosEntrada :salidaProductos:growl" onsuccess="jQuery('#form_add_prod').modal('hide');" actionListener="#{salidasBean.cargarProductoALista}"></p:remoteCommand>	
+	              <p:remoteCommand name="agregarProdLista" update=":salidaProductos:tablaProductosSalida :salidaProductos:growl" oncomplete="setLPTBodyHeight('tablaProductosSalida','footer-confirmacion');" onsuccess="jQuery('#form_add_prod').modal('hide');" actionListener="#{salidasBean.cargarProductoALista}"></p:remoteCommand>	
 	              <div class="control-group">
 	                 <label class="control-label" for="lista_prods">Producto</label>
 	                 <div class="controls">

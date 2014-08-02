@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.motelmanager.domain.Entrada;
 import com.motelmanager.domain.Salida;
 
 @Repository(value = "salidaDAO")
@@ -28,7 +29,7 @@ public class JPASalidaDAO implements SalidaDAO{
 	
 	@Transactional
 	public void eliminarSalida(Salida salida){
-		if(salida != null) em.remove(salida);
+		if(salida != null) em.remove(em.contains(salida) ? salida : em.merge(salida));
 	}
 	
 	@Transactional
@@ -45,5 +46,18 @@ public class JPASalidaDAO implements SalidaDAO{
 		} else {
 			return result.intValue();
 		}		
+	}
+
+	@Transactional
+	public Salida obtenerSalida(int idSalida) {
+		if(idSalida >= 0){
+			Query q = em.createQuery("select s from Salida s where s.idSalida = :idSalida");
+			q.setParameter("idSalida", idSalida);
+			Salida salida = (Salida)q.getSingleResult();
+			if(salida != null){
+				return salida;
+			}
+		}
+		return null;
 	}
 }

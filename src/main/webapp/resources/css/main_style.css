@@ -1,3 +1,7 @@
 .form-input{
 	text-align: right;
 }
+
+.form-input input{
+	text-align: right;
+}

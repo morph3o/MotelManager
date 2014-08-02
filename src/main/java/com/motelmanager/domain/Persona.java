@@ -39,11 +39,11 @@ public class Persona implements Serializable {
 
 	//bi-directional many-to-one association to Entrada
 	@OneToMany(mappedBy="persona")
-	private List<Entrada> entradas;
+	private List<Entrada> entrada;
 
 	//bi-directional many-to-one association to Salida
 	@OneToMany(mappedBy="persona")
-	private List<Salida> salidas;
+	private List<Salida> salida;
 
 	public Persona() {
 	}
@@ -105,19 +105,19 @@ public class Persona implements Serializable {
 	}
 
 	public List<Entrada> getEntradas() {
-		return this.entradas;
+		return this.entrada;
 	}
 
 	public void setEntradas(List<Entrada> entradas) {
-		this.entradas = entradas;
+		this.entrada = entradas;
 	}
 
 	public List<Salida> getSalidas() {
-		return this.salidas;
+		return this.salida;
 	}
 
 	public void setSalidas(List<Salida> salidas) {
-		this.salidas = salidas;
+		this.salida = salidas;
 	}
 
 }

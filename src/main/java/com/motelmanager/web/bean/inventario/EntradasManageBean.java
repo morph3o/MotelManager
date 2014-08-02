@@ -12,6 +12,7 @@ import javax.faces.event.ActionEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.motelmanager.domain.DetalleEntrada;
 import com.motelmanager.domain.Entrada;
 import com.motelmanager.domain.Producto;
 import com.motelmanager.service.EntradaManager;
@@ -29,8 +30,8 @@ public class EntradasManageBean {
 
 	private Entrada entrada;
 	private int idEntrada;
-	private List<Entrada> listaEntradas;
 	private List<Producto> listaProductosEntrada;
+	private List<DetalleEntrada> detalleEntrada;
 	private Date fechaIngreso;
 	private Entrada entradaBorrar;
 	
@@ -53,13 +54,9 @@ public class EntradasManageBean {
 		this.initParameters(null);
 	}
 	
-	public void ingresarListaProductos(){
-		
-	}
-	
 	public void initParameters(ActionEvent actionEvent){
 		this.entrada = new Entrada();
-		this.listaEntradas = new ArrayList<Entrada>();
+		this.detalleEntrada = new ArrayList<DetalleEntrada>();
 		if(this.listaProductosEntrada == null) listaProductosEntrada = new ArrayList<Producto>();
 		this.fechaIngreso = null;
 		this.cantidadIngreso = 0;
@@ -68,10 +65,11 @@ public class EntradasManageBean {
 	public void limpiarModalNuevoProducto(){
 		this.cantidadIngreso = 0;
 		this.productoNuevo = null;
+		this.prodSelec = "";
 	}
 	
 	public void cargarProductoALista(ActionEvent actionEvent){
-		Entrada entrada = new Entrada();
+		DetalleEntrada detalleEntradaAux = new DetalleEntrada();
 		Producto auxProd = null;
 		for(Producto prod : productoManager.listarProductos()){
 			if(prod.getNmProd().equalsIgnoreCase(prodSelec)){
@@ -85,33 +83,31 @@ public class EntradasManageBean {
 			FacesMessageUtil.showErrorMessage("La cantidad ingresada debe ser mayor a 0.");
 			return;
 		} else if(this.existeProdEnEntradas(auxProd)){
-			for(Entrada entradaAux : this.listaEntradas){
-				if(entradaAux.getProducto().getIdProd() == auxProd.getIdProd()){
-					entradaAux.setCantIngreso(entradaAux.getCantIngreso() + this.cantidadIngreso);
-					entradaAux.setCantExtDesp(entradaAux.getCantExtDesp() + this.cantidadIngreso);
+			for(DetalleEntrada item : this.detalleEntrada){
+				if(item.getProducto().getIdProd() == auxProd.getIdProd()){
+					item.setCantIngreso(item.getCantIngreso() + this.cantidadIngreso);
+					item.setCantExtAnt(item.getCantExtAnt() + this.cantidadIngreso);
 					this.limpiarModalNuevoProducto();
 					return;
-				}			
+				}
 			}
 		} else {
 			int cantFutura = 0;
-			entrada.setIdEntrada(this.idEntrada);
-			entrada.setFactura(null);
-			entrada.setProducto(auxProd);			
-			entrada.setCantIngreso(this.cantidadIngreso);
-			entrada.setCantExtAnt(auxProd.getCantProd());
+			detalleEntradaAux.setCantIngreso(this.cantidadIngreso);
+			detalleEntradaAux.setCantExtAnt(auxProd.getCantProd());
 			cantFutura = auxProd.getCantProd() + this.cantidadIngreso;
-			entrada.setCantExtDesp(cantFutura);
-			entrada.getProducto().setCantProd(cantFutura);
-			
-			this.listaEntradas.add(entrada);
+			detalleEntradaAux.setCantExtDesp(cantFutura);
+			auxProd.setCantProd(cantFutura);
+			detalleEntradaAux.setProducto(auxProd);
+
+			this.detalleEntrada.add(detalleEntradaAux);
 			this.limpiarModalNuevoProducto();
 		}		
 	}
 	
 	private boolean existeProdEnEntradas(Producto producto){
-		for(Entrada entrada : this.listaEntradas){
-			if(entrada.getProducto().getIdProd() == producto.getIdProd()){
+		for(DetalleEntrada itemDE : this.detalleEntrada){
+			if(itemDE.getProducto().getIdProd() == producto.getIdProd()){
 				return true;
 			}
 		}
@@ -124,7 +120,7 @@ public class EntradasManageBean {
 			FacesMessageUtil.showErrorMessage("La fecha debe ser ingresada.");
 			validador = false;
 		} 
-		if(this.listaEntradas == null || this.listaEntradas.size() <= 0){
+		if(this.detalleEntrada == null || this.detalleEntrada.size() <= 0){
 			FacesMessageUtil.showErrorMessage("Debe ingresar a lo menos un producto.");
 			validador = false;
 		}
@@ -135,9 +131,9 @@ public class EntradasManageBean {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap(); 
 		String idProdEliminar = params.get("idProd");
 		int idProd = Integer.parseInt(idProdEliminar);
-		for(Entrada entrada : this.listaEntradas){
-			if(entrada.getProducto().getIdProd() == idProd){
-				this.listaEntradas.remove(entrada);
+		for(DetalleEntrada itemDE : this.detalleEntrada){
+			if(itemDE.getProducto().getIdProd() == idProd){
+				this.detalleEntrada.remove(itemDE);
 				return;
 			}
 		}	
@@ -146,8 +142,11 @@ public class EntradasManageBean {
 	public void ingresarEntradas(){
 		try{
 			if(this.validarFormularioEntrada()){
-				this.ingresarFechaEntradas();
-				entradaManager.ingresarProductos(this.listaEntradas);
+				entrada.setIdEntrada(this.idEntrada);
+				entrada.setFactura(null);
+				entrada.setPersona(null);	
+				entrada.setFechaIngreso(fechaIngreso);
+				entradaManager.ingresarProductos(this.entrada, this.detalleEntrada);
 				this.init();
 			} else {
 				return;
@@ -157,12 +156,6 @@ public class EntradasManageBean {
 			return;
 		}
 		FacesMessageUtil.showInfoMessage("Se han ingresado los productos satisfactoriamente.");
-	}
-	
-	private void ingresarFechaEntradas(){
-		for(Entrada ent : this.listaEntradas){
-			ent.setFechaIngreso(fechaIngreso);
-		}
 	}
 	
 	public Entrada getEntrada() {
@@ -227,14 +220,6 @@ public class EntradasManageBean {
 	public void setProdSelec(String prodSelec) {
 		this.prodSelec = prodSelec;
 	}	
-	
-	public List<Entrada> getListaEntradas() {
-		return listaEntradas;
-	}
-
-	public void setListaEntradas(List<Entrada> listaEntradas) {
-		this.listaEntradas = listaEntradas;
-	}
 
 	public Entrada getEntradaBorrar() {
 		return entradaBorrar;
@@ -242,6 +227,14 @@ public class EntradasManageBean {
 
 	public void setEntradaBorrar(Entrada entradaBorrar) {
 		this.entradaBorrar = entradaBorrar;
+	}
+
+	public List<DetalleEntrada> getDetalleEntrada() {
+		return detalleEntrada;
+	}
+
+	public void setDetalleEntrada(List<DetalleEntrada> detalleEntrada) {
+		this.detalleEntrada = detalleEntrada;
 	}
 	
 }

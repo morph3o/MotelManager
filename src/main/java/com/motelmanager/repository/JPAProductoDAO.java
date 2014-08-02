@@ -75,9 +75,7 @@ public class JPAProductoDAO implements ProductoDAO{
 	public void removerProducto(Producto prod) {
 		try{
 			em.remove(em.contains(prod) ? prod : em.merge(prod));
-			FacesMessageUtil.showInfoMessage("El producto "+prod.getNmProd()+" fue eliminado correctamente.");
 		}catch (Exception ex){
-			FacesMessageUtil.showErrorMessage("Un error ha ocurrido tratando de eliminar el producto");
 			ex.printStackTrace();
 			return;
 		}		

@@ -1,9 +1,11 @@
 package com.motelmanager.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -11,26 +13,20 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="entradas")
+@Table(name="entrada")
 public class Entrada implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="entradas_id_seq",
-                       sequenceName="entradas_id_seq",
+	@SequenceGenerator(name="entrada_id_seq",
+                       sequenceName="entrada_id_seq",
                        allocationSize=1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE,
-                    generator="entradas_id_seq")
+                    generator="entrada_id_seq")
 	private Integer id;
 	
-	@Column(name="cant_ext_ant")
-	private int cantExtAnt;
-
-	@Column(name="cant_ext_desp")
-	private int cantExtDesp;
-
-	@Column(name="cant_ingreso")
-	private int cantIngreso;
+	@Column(name="cant_prod_ing")
+	private int cantProdIng;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="fecha_ingreso")
@@ -38,16 +34,15 @@ public class Entrada implements Serializable {
 
 	@Column(name="id_entrada")
 	private int idEntrada;
+	
+	//bi-directional many-to-one association to DetalleEntrada
+	@OneToMany(mappedBy="entrada")
+	private List<DetalleEntrada> detalleEntradas;
 
 	//bi-directional many-to-one association to Factura
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="id_factura", referencedColumnName="id_factura")
 	private Factura factura;
-
-	//bi-directional many-to-one association to Producto
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="id_prod", referencedColumnName="id_prod")
-	private Producto producto;
 
 	//bi-directional many-to-one association to Persona
 	@ManyToOne(fetch = FetchType.EAGER)
@@ -63,30 +58,6 @@ public class Entrada implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public int getCantExtAnt() {
-		return this.cantExtAnt;
-	}
-
-	public void setCantExtAnt(int cantExtAnt) {
-		this.cantExtAnt = cantExtAnt;
-	}
-
-	public int getCantExtDesp() {
-		return this.cantExtDesp;
-	}
-
-	public void setCantExtDesp(int cantExtDesp) {
-		this.cantExtDesp = cantExtDesp;
-	}
-
-	public int getCantIngreso() {
-		return this.cantIngreso;
-	}
-
-	public void setCantIngreso(int cantIngreso) {
-		this.cantIngreso = cantIngreso;
 	}
 
 	public Date getFechaIngreso() {
@@ -113,20 +84,28 @@ public class Entrada implements Serializable {
 		this.factura = factura;
 	}
 
-	public Producto getProducto() {
-		return this.producto;
-	}
-
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
-
 	public Persona getPersona() {
 		return this.persona;
 	}
 
 	public void setPersona(Persona persona) {
 		this.persona = persona;
+	}
+
+	public int getCantProdIng() {
+		return cantProdIng;
+	}
+
+	public void setCantProdIng(int cantProdIng) {
+		this.cantProdIng = cantProdIng;
+	}
+
+	public List<DetalleEntrada> getDetalleEntradas() {
+		return detalleEntradas;
+	}
+
+	public void setDetalleEntradas(List<DetalleEntrada> detalleEntradas) {
+		this.detalleEntradas = detalleEntradas;
 	}
 
 }

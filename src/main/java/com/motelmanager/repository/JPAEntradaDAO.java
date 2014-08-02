@@ -28,7 +28,7 @@ public class JPAEntradaDAO implements EntradaDAO{
 	
 	@Transactional
 	public void eliminarEntrada(Entrada entrada){
-		if(entrada != null) em.remove(entrada);
+		if(entrada != null) em.remove(em.contains(entrada) ? entrada : em.merge(entrada));
 	}
 	
 	@Transactional
@@ -45,6 +45,19 @@ public class JPAEntradaDAO implements EntradaDAO{
 		} else {
 			return result.intValue();
 		}		
+	}
+
+	@Transactional
+	public Entrada obtenerEntrada(int idEntrada) {
+		if(idEntrada >= 0){
+			Query q = em.createQuery("select e from Entrada e where e.idEntrada = :idEntrada");
+			q.setParameter("idEntrada", idEntrada);
+			Entrada entrada = (Entrada)q.getSingleResult();
+			if(entrada != null){
+				return entrada;
+			}
+		}
+		return null;
 	}
 
 }

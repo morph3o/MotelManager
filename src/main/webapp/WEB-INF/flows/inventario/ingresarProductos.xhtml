@@ -47,36 +47,36 @@
 	                <p:remoteCommand name="eliminarProdLista" update="growl :listaProductos:tablaProductosEntrada" oncomplete="setLPTBodyHeight('tablaProductosEntrada','footer-confirmacion');" actionListener="#{entradasBean.eliminarProductoDesdeEntrada}"></p:remoteCommand>
 	                <p:remoteCommand name="ingresarEntrada" update=":listaProductos growl" oncomplete="jQuery('#confirmar_ingreso').modal('hide'); setLPTBodyHeight('tablaProductosEntrada','footer-confirmacion');" actionListener="#{entradasBean.ingresarEntradas}"></p:remoteCommand>
 	                <p:remoteCommand name="limpiarEntrada" update=":listaProductos growl" oncomplete="jQuery('#confirmar_limpiar').modal('hide'); setLPTBodyHeight('tablaProductosEntrada','footer-confirmacion');" actionListener="#{entradasBean.init}"></p:remoteCommand>	                
-	                <h:dataTable id="tablaProductosEntrada" value="#{entradasBean.listaEntradas}" var="entrada"
+	                <h:dataTable id="tablaProductosEntrada" value="#{entradasBean.detalleEntrada}" var="detalleEntrada"
 	                            styleClass="table table-hover table-condensed ingresarProdTable" >
 	                    <h:column>
 	                        <f:facet name="header">ID</f:facet>
-	                        #{entrada.producto.idProd}
+	                        #{detalleEntrada.producto.idProd}
 	                    </h:column>
 	
 	                    <h:column>
 	                        <f:facet name="header">Nombre</f:facet>
-	                        #{entrada.producto.nmProd}
+	                        #{detalleEntrada.producto.nmProd}
 	                    </h:column>
 	
 	                    <h:column>
 	                        <f:facet name="header">Stock</f:facet>
-	                        #{entrada.cantExtAnt}
+	                        #{detalleEntrada.cantExtAnt}
 	                    </h:column>
 	
 	                    <h:column>
 	                        <f:facet name="header">Ingreso</f:facet>
-	                        #{entrada.cantIngreso}
+	                        #{detalleEntrada.cantIngreso}
 	                    </h:column>
 	
 	                    <h:column id="prueba">
 	                        <f:facet name="header">Stock Futuro</f:facet>
-	                        #{entrada.cantExtDesp}
+	                        #{detalleEntrada.cantExtDesp}
 	                    </h:column>
 	
 	                    <h:column>
 	                        <f:facet name="header">Acción</f:facet>
-	                        <a href="#" onclick="eliminarProdLista([{name:'idProd', value:#{entrada.producto.idProd}}]);" class="icon-trashcan-2"></a>
+	                        <a href="#" onclick="eliminarProdLista([{name:'idProd', value:#{detalleEntrada.producto.idProd}}]);" class="icon-trashcan-2"></a>
 	                    </h:column>
 	                </h:dataTable>	                        
 		        </div>

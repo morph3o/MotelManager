@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.motelmanager.domain.DetalleEntrada;
 import com.motelmanager.domain.Entrada;
+import com.motelmanager.repository.DetalleEntradaDAO;
 import com.motelmanager.repository.EntradaDAO;
 import com.motelmanager.repository.FacturaDAO;
 import com.motelmanager.repository.ProductoDAO;
@@ -21,12 +23,17 @@ public class SimpleEntradaManager implements EntradaManager{
 	private ProductoDAO prodDAO;
 	@Autowired
 	private FacturaDAO facturaDAO;
+	@Autowired
+	private DetalleEntradaDAO detalleEntradaDAO;
 
 	@Override
-	public void ingresarProductos(List<Entrada> entradas) {
-		for(Entrada entrada : entradas){
-			entradaDAO.ingresoProductos(entrada);
-			prodDAO.modificarProducto(entrada.getProducto());
+	public void ingresarProductos(Entrada entrada, List<DetalleEntrada> detalleEntrada) {
+		entrada.setDetalleEntradas(detalleEntrada);
+		entradaDAO.ingresoProductos(entrada);
+		for(DetalleEntrada itemDE : detalleEntrada){
+			itemDE.setEntrada(entrada);
+			detalleEntradaDAO.ingresarDetalleEntrada(itemDE);
+			prodDAO.modificarProducto(itemDE.getProducto());
 		}
 	}
 
