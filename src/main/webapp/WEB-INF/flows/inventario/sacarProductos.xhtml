@@ -17,13 +17,15 @@
 		                  <div class="control-group">
 		                     <label class="control-label" for="inputEmail">ID Salida</label>
 		                     <div class="controls">
-		                     	<p:inputText id="id_salida" value="#{salidasBean.idSalida}" readonly="true" styleClass="form-input" style="margin-left: 11px;"></p:inputText>
+		                     	<p:inputText id="id_salida" data-toggle="tooltip" title="Este numero se genera automaticamente, no es posible modificarlo."  
+		                     		value="#{salidasBean.idSalida}" readonly="true" styleClass="form-input" style="margin-left: 11px;"></p:inputText>
 		                     </div>
 		                  </div>
 		                  <div class="control-group">
 		                     <label class="control-label" for="fecha">Fecha</label>
 		                     <div class="controls">
-								<p:calendar id="fecha" value="#{salidasBean.fechaSalida}" style="margin-left: 33px;" styleClass="form-input" readonlyInput="true" pattern="dd/MM/yyyy" />
+								<p:calendar id="fecha" 
+									value="#{salidasBean.fechaSalida}" style="margin-left: 33px;" styleClass="form-input" readonlyInput="true" pattern="dd/MM/yyyy" />
 		                     </div>
 		                  </div>
 		              </fieldset>
@@ -145,5 +147,17 @@
 			</div>
 		</div>
         <!-- FIN MODAL CONFIRMACION LIMPIAR SALIDA -->
+        
+        <script>
+       		$(document).ready(function(){
+	        	$("#id_salida").tooltip({
+	        		placement:'right'
+	        	}); 
+	        	$("#fecha_input").tooltip({
+	        		placement:'right',
+	        		title: 'Fecha de cuando se hace egreso de los productos.'	        		
+	        	});	        	
+	     	});
+        </script>
 	</ui:define>
 </ui:composition>

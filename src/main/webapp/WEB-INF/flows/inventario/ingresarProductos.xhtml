@@ -17,7 +17,8 @@
 		                  <div class="control-group">
 		                     <label class="control-label" for="inputEmail">ID Entrada</label>
 		                     <div class="controls">
-		                        <p:inputText id="id_entrada" styleClass="form-input" placeholder="Nombre del producto"
+		                        <p:inputText data-toggle="tooltip" title="Este numero se genera automaticamente, no es posible modificarlo." 
+		                        	id="id_entrada" styleClass="form-input" placeholder="Nombre del producto"
 									value="#{entradasBean.idEntrada}" readonly="true"></p:inputText>
 		                     </div>
 		                  </div>
@@ -32,7 +33,7 @@
 		                  <div class="control-group">
 		                     <label class="control-label" for="id_factura">ID Factura</label>
 		                     <div class="controls">
-		                        <p:inputText id="id_factura"
+		                        <p:inputText data-toggle="tooltip" title="Por ahora el modulo de facturas está deshabilitado." id="id_factura"
 									value="#{entradasBean.idEntrada}" readonly="true" styleClass="form-input"></p:inputText>
 		                     </div>
 		                  </div>
@@ -153,5 +154,19 @@
 			</div>
 		</div>
         <!-- FIN MODAL CONFIRMACION LIMPIAR ENTRADA -->
+        <script>
+       		$(document).ready(function(){
+	        	$("#id_entrada").tooltip({
+	        		placement:'right'
+	        	}); 
+	        	$("#id_factura").tooltip({
+	        		placement:'top'
+	        	});
+	        	$("#fecha_input").tooltip({
+	        		placement:'right',
+	        		title: 'Fecha de cuando se hace ingreso de los productos.'	        		
+	        	});
+	     	});
+        </script>
 	</ui:define>
 </ui:composition>

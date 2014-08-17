@@ -86,31 +86,36 @@
 					<div class="control-group">
 					   <label class="control-label" for="id_producto">ID</label>
 					   <div class="controls">
-					      <p:inputText id="id_producto" value="#{inventarioBean.producto.idProd}" placeholder="ID del producto"></p:inputText>
+					      <p:inputText data-toggle="tooltip" title="ID del producto para identificarlo. Debe ser un valor numérico."  
+					      	id="id_producto" value="#{inventarioBean.producto.idProd}" placeholder="ID del producto"></p:inputText>
 					   </div>
 					</div>
 					<div class="control-group">
 					   <label class="control-label" for="nm_producto">Nombre</label>
 					   <div class="controls">
-					      <p:inputText id="nm_producto" value="#{inventarioBean.producto.nmProd}" placeholder="Nombre del producto"></p:inputText>
+					      <p:inputText data-toggle="tooltip" title="Nombre que se le asignará al producto."  
+				      		id="nm_producto" value="#{inventarioBean.producto.nmProd}" placeholder="Nombre del producto"></p:inputText>
 					   </div>
 					</div>
 					<div class="control-group">
 					   <label class="control-label" for="tipo_producto">Tipo</label>
 					   <div class="controls">
-					      <p:inputText id="tipo_producto" value="#{inventarioBean.producto.tipoProd}" placeholder="Tipo de producto"></p:inputText>
+					      <p:inputText data-toggle="tooltip" title="Tipo del producto. Este puede ser bebida, licor, limpieza, etc."  
+					      	id="tipo_producto" value="#{inventarioBean.producto.tipoProd}" placeholder="Tipo de producto"></p:inputText>
 					   </div>
 					</div>
 					<div class="control-group">
 					   <label class="control-label" for="marca_prod">Marca</label>
 					   <div class="controls">
-					      <p:inputText id="marca_producto" value="#{inventarioBean.producto.marca}" placeholder="Marca del producto"></p:inputText>
+					      <p:inputText data-toggle="tooltip" title="Marca del producto. Por ejemplo, Coca-cola, CCU, Confort, etc." 
+					      	id="marca_producto" value="#{inventarioBean.producto.marca}" placeholder="Marca del producto"></p:inputText>
 					   </div>
 					</div>
 					<div class="control-group">
 					   <label class="control-label" for="img_producto">Imagen</label>
 					   <div class="controls">
-					      <p:inputText id="img_producto" value="#{inventarioBean.producto.imagen}" placeholder="Imagen del producto"></p:inputText>
+					      <p:inputText data-toggle="tooltip" title="Imagen del producto. Por ahora no es necesario rellenar este campo."  
+					      	id="img_producto" value="#{inventarioBean.producto.imagen}" placeholder="Imagen del producto"></p:inputText>
 					      <br/>
 					      <span class="btn btn-default btn-file">Upload<input disabled="true" type="file" /></span>
 					   </div>
@@ -118,7 +123,8 @@
 					<div class="control-group">
 					   <label class="control-label" for="detalle_producto">Comentario</label>
 					   <div class="controls">	
-						  <p:inputText id="detalle_producto" value="#{inventarioBean.producto.detalle}" placeholder="Comentario..."></p:inputText>	                
+						  <p:inputText data-toggle="tooltip" title="Agregar cualquier tipo de comentario relacionado al producto."  
+						  	id="detalle_producto" value="#{inventarioBean.producto.detalle}" placeholder="Comentario..."></p:inputText>	                
 					   </div>
 					</div>
        			</h:form>
@@ -143,31 +149,36 @@
 					<div class="control-group">
 					   <label class="control-label" for="id_producto">ID</label>
 					   <div class="controls">
-					      <p:inputText id="id_producto" value="#{inventarioBean.productoMod.idProd}" placeholder="ID del producto"></p:inputText>
+					      <p:inputText data-toggle="tooltip" title="ID del producto para identificarlo. Debe ser un valor numérico."  
+					      	id="id_producto" value="#{inventarioBean.productoMod.idProd}" placeholder="ID del producto"></p:inputText>
 					   </div>
 					</div>
 					<div class="control-group">
 					   <label class="control-label" for="nm_producto">Nombre</label>
 					   <div class="controls">
-					      <p:inputText id="nm_producto" value="#{inventarioBean.productoMod.nmProd}" placeholder="Nombre del producto"></p:inputText>
+					      <p:inputText data-toggle="tooltip" title="Nombre que se le asignará al producto."  
+					      	id="nm_producto" value="#{inventarioBean.productoMod.nmProd}" placeholder="Nombre del producto"></p:inputText>
 					   </div>
 					</div>
 					<div class="control-group">
 					   <label class="control-label" for="tipo_producto">Tipo</label>
 					   <div class="controls">
-					      <p:inputText id="tipo_producto" value="#{inventarioBean.productoMod.tipoProd}" placeholder="Tipo de producto"></p:inputText>
+					      <p:inputText data-toggle="tooltip" title="Tipo del producto. Este puede ser bebida, licor, limpieza, etc."  
+					      	id="tipo_producto" value="#{inventarioBean.productoMod.tipoProd}" placeholder="Tipo de producto"></p:inputText>
 					   </div>
 					</div>
 					<div class="control-group">
 					   <label class="control-label" for="marca_prod">Marca</label>
 					   <div class="controls">
-					      <p:inputText id="marca_producto" value="#{inventarioBean.productoMod.marca}" placeholder="Marca del producto"></p:inputText>
+					      <p:inputText data-toggle="tooltip" title="Marca del producto. Por ejemplo, Coca-cola, CCU, Confort, etc." 
+					      	id="marca_producto" value="#{inventarioBean.productoMod.marca}" placeholder="Marca del producto"></p:inputText>
 					   </div>
 					</div>
 					<div class="control-group">
 					   <label class="control-label" for="img_producto">Imagen</label>
 					   <div class="controls">
-					      <p:inputText id="img_producto" value="#{inventarioBean.productoMod.imagen}" placeholder="Imagen del producto"></p:inputText>
+					      <p:inputText data-toggle="tooltip" title="Imagen del producto. Por ahora no es necesario rellenar este campo." 
+					      	id="img_producto" value="#{inventarioBean.productoMod.imagen}" placeholder="Imagen del producto"></p:inputText>
 					      <br/>
 					      <span class="btn btn-default btn-file">Upload<input disabled="true" type="file" /></span>
 					   </div>
@@ -175,7 +186,8 @@
 					<div class="control-group">
 					   <label class="control-label" for="detalle_producto">Comentario</label>
 					   <div class="controls">	
-						  <p:inputText id="detalle_producto" value="#{inventarioBean.productoMod.detalle}" placeholder="Comentario..."></p:inputText>	                
+						  <p:inputText data-toggle="tooltip" title="Agregar cualquier tipo de comentario relacionado al producto." 
+						  	id="detalle_producto" value="#{inventarioBean.productoMod.detalle}" placeholder="Comentario..."></p:inputText>	                
 					   </div>
 					</div>
        			</h:form>
@@ -186,5 +198,45 @@
 		    </div>
 		</div>
 		<!-- FIN MODAL PARA MODIFICAR PRODUCTO -->
+		<script>
+			$(document).ready(function(){
+	        	$("#formAgregarProd\\:id_producto").tooltip({
+	        		placement:'right'
+	        	}); 
+	        	$("#formAgregarProd\\:nm_producto").tooltip({
+	        		placement:'right'
+	        	});
+	        	$("#formAgregarProd\\:tipo_producto").tooltip({
+	        		placement:'right'
+	        	});
+	        	$("#formAgregarProd\\:marca_producto").tooltip({
+	        		placement:'right'
+	        	});
+	        	$("#formAgregarProd\\:img_producto").tooltip({
+	        		placement:'right'
+	        	});
+	        	$("#formAgregarProd\\:detalle_producto").tooltip({
+	        		placement:'right'
+	        	});
+	        	$("#formModificarProd\\:id_producto").tooltip({
+	        		placement:'right'
+	        	}); 
+	        	$("#formModificarProd\\:nm_producto").tooltip({
+	        		placement:'right'
+	        	});
+	        	$("#formModificarProd\\:tipo_producto").tooltip({
+	        		placement:'right'
+	        	});
+	        	$("#formModificarProd\\:marca_producto").tooltip({
+	        		placement:'right'
+	        	});
+	        	$("#formModificarProd\\:img_producto").tooltip({
+	        		placement:'right'
+	        	});
+	        	$("#formModificarProd\\:detalle_producto").tooltip({
+	        		placement:'right'
+	        	});
+	     	}); 
+		</script>
 	</ui:define>
 </ui:composition>
