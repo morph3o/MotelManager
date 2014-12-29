@@ -17,6 +17,7 @@ import com.motelmanager.domain.Entrada;
 import com.motelmanager.domain.Producto;
 import com.motelmanager.service.EntradaManager;
 import com.motelmanager.service.ProductManager;
+import com.motelmanager.util.DateTool;
 import com.motelmanager.util.FacesMessageUtil;
 
 @Controller("entradasBean")
@@ -32,7 +33,7 @@ public class EntradasManageBean {
 	private int idEntrada;
 	private List<Producto> listaProductosEntrada;
 	private List<DetalleEntrada> detalleEntrada;
-	private Date fechaIngreso;
+	private String fechaIngreso;
 	private Entrada entradaBorrar;
 	
 	/** 
@@ -145,7 +146,7 @@ public class EntradasManageBean {
 				entrada.setIdEntrada(this.idEntrada);
 				entrada.setFactura(null);
 				entrada.setPersona(null);	
-				entrada.setFechaIngreso(fechaIngreso);
+				entrada.setFechaIngreso(DateTool.stringToDate(fechaIngreso));
 				entradaManager.ingresarProductos(this.entrada, this.detalleEntrada);
 				this.init();
 			} else {
@@ -153,6 +154,7 @@ public class EntradasManageBean {
 			}
 		} catch (Exception ex) {
 			FacesMessageUtil.showErrorMessage("Ocurrió un error al intentar ingresar la entrada.");
+			ex.printStackTrace();
 			return;
 		}
 		FacesMessageUtil.showInfoMessage("Se han ingresado los productos satisfactoriamente.");
@@ -165,11 +167,11 @@ public class EntradasManageBean {
 		this.entrada = entrada;
 	}
 
-	public Date getFechaIngreso() {
+	public String getFechaIngreso() {
 		return fechaIngreso;
 	}
 
-	public void setFechaIngreso(Date fechaIngreso) {
+	public void setFechaIngreso(String fechaIngreso) {
 		this.fechaIngreso = fechaIngreso;
 	}
 

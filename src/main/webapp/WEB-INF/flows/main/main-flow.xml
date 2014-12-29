@@ -4,9 +4,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
-	<view-state id="main-menu">
-		<transition on="intern_menu" to="intern_menu"></transition>
-	</view-state>
+<!-- 	<view-state id="main-menu"> -->
+<!-- 		<transition on="intern_menu" to="intern_menu"></transition> -->
+<!-- 	</view-state> -->
 	
 	<view-state id="intern_menu">
 		<transition on="toInventario" to="inventario"></transition>

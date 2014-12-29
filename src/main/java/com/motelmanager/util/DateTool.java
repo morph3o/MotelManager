@@ -1,5 +1,6 @@
 package com.motelmanager.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -10,6 +11,18 @@ public class DateTool {
 			return "'"+ (new SimpleDateFormat(format).format(date)) + "'";
 		}
 		return null;
+	}
+	
+	public static Date stringToDate(String dateSt){
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+	 
+		Date date = null;
+		try {
+			date = formatter.parse(dateSt);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
 	}
 
 }

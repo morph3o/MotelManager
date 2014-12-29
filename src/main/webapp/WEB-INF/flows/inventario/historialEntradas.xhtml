@@ -1,0 +1,151 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/layouts/relative_layout_app.xhtml">
+
+	<ui:define name="content">
+		<div class="row-fluid">
+			<div class="span12">
+	          <h1>Historial Entradas</h1>
+	        </div>
+	        <div class="span12" style="margin-left: 0px;">
+				<h:form>
+					<div id="header-form" class="span12 form-inline form-search">
+						<label>Desde</label> 
+						<input type="text" id="dp2" data-date-format="mm/dd/yy" 
+							placeholder="Desde..." class="span2 datepicker" 
+							data-provide="datepicker" />
+						<label>Hasta</label>
+						<input type="text" id="dp2" data-date-format="mm/dd/yy"
+							placeholder="Hasta..." class="span2 datepicker"
+							data-provide="datepicker" />
+						<button type="submit" class="btn">Buscar</button>
+					</div>
+					<div id="table-form" class="span12" style="margin-left: 0px;">
+						<h:dataTable id="historialEntradasTable" value="#{historialEntradasBean.listaEntradas}" var="entrada"
+	                            styleClass="table table-hover table-condensed ingresarProdTable" >
+		                    <h:column>
+		                        <f:facet name="header">ID</f:facet>
+		                        #{entrada.producto.idProd}
+		                    </h:column>
+		
+		                    <h:column>
+		                        <f:facet name="header">Nombre</f:facet>
+		                        #{detalleEntrada.producto.nmProd}
+		                    </h:column>
+		
+		                    <h:column>
+		                        <f:facet name="header">Stock</f:facet>
+		                        #{detalleEntrada.cantExtAnt}
+		                    </h:column>
+		
+		                    <h:column>
+		                        <f:facet name="header">Ingreso</f:facet>
+		                        #{detalleEntrada.cantIngreso}
+		                    </h:column>
+		
+		                    <h:column id="prueba">
+		                        <f:facet name="header">Stock Futuro</f:facet>
+		                        #{detalleEntrada.cantExtDesp}
+		                    </h:column>
+		
+		                    <h:column>
+		                        <f:facet name="header">Acción</f:facet>
+		                        <a href="#" onclick="eliminarProdLista([{name:'idProd', value:#{detalleEntrada.producto.idProd}}]);" class="icon-trashcan-2"></a>
+		                    </h:column>
+		                </h:dataTable>
+						<table id="ingresarProdTable" class="table table-hover">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Tipo</th>
+									<th>Fecha</th>
+									<th>Cantidad Productos Ingresados</th>
+									<th>Persona</th>
+									<th>Detalle</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1000</td>
+									<td>Entrada</td>
+									<td>10/03/1986</td>
+									<td>10</td>
+									<td>Piero Divasto</td>
+									<td><a href="#" class="icon-search"></a></td>
+								</tr>
+								<tr>
+									<td>1000</td>
+									<td>Entrada</td>
+									<td>10/03/1986</td>
+									<td>10</td>
+									<td>Piero Divasto</td>
+									<td><a href="#" class="icon-search"></a></td>
+								</tr>
+								<tr>
+									<td>1000</td>
+									<td>Entrada</td>
+									<td>10/03/1986</td>
+									<td>10</td>
+									<td>Piero Divasto</td>
+									<td><a href="#" class="icon-search"></a></td>
+								</tr>
+								<tr>
+									<td>1000</td>
+									<td>Entrada</td>
+									<td>10/03/1986</td>
+									<td>10</td>
+									<td>Piero Divasto</td>
+									<td><a href="#" class="icon-search"></a></td>
+								</tr>
+								<tr>
+									<td>1000</td>
+									<td>Entrada</td>
+									<td>10/03/1986</td>
+									<td>10</td>
+									<td>Piero Divasto</td>
+									<td><a href="#" class="icon-search"></a></td>
+								</tr>
+								<tr>
+									<td>1000</td>
+									<td>Entrada</td>
+									<td>10/03/1986</td>
+									<td>10</td>
+									<td>Piero Divasto</td>
+									<td><a href="#" class="icon-search"></a></td>
+								</tr>
+								<tr>
+									<td>1000</td>
+									<td>Entrada</td>
+									<td>10/03/1986</td>
+									<td>10</td>
+									<td>Piero Divasto</td>
+									<td><a href="#" class="icon-search"></a></td>
+								</tr>
+								<tr>
+									<td>1000</td>
+									<td>Entrada</td>
+									<td>10/03/1986</td>
+									<td>10</td>
+									<td>Piero Divasto</td>
+									<td><a href="#" class="icon-search"></a></td>
+								</tr>
+								<tr>
+									<td>1000</td>
+									<td>Entrada</td>
+									<td>10/03/1986</td>
+									<td>10</td>
+									<td>Piero Divasto</td>
+									<td><a href="#" class="icon-search"></a></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

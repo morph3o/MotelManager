@@ -8,7 +8,8 @@
 		<if test="routerBean.nextPage == 'listaProductos'" then="listaProductos" />
 		<if test="routerBean.nextPage == 'addProd'" then="agregarProducto" />
 		<if test="routerBean.nextPage == 'ingresarProds'" then="ingresarProductos" />
-		<if test="routerBean.nextPage == 'sacarProds'" then="sacarProductos" />		
+		<if test="routerBean.nextPage == 'sacarProds'" then="sacarProductos" />	
+		<if test="routerBean.nextPage == 'historialEntradas'" then="historialEntradas" />		
 	</decision-state>
 	
 	<view-state id="listaProductos">
@@ -29,6 +30,9 @@
 		<on-entry>
 			<evaluate expression="salidasBean.init()"></evaluate>
 		</on-entry>
+	</view-state>
+	
+	<view-state id="historialEntradas">
 	</view-state>
 
 </flow>

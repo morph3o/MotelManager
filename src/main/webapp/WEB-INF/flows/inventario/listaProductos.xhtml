@@ -6,196 +6,201 @@
 	template="/WEB-INF/layouts/relative_layout_app.xhtml">
 	
 	<ui:define name="content">
-		<div class="row-fluid">						
-			<div class="span12">
-	          <h1>Inventario</h1>
-	        </div>
-	        <div class="span2 offset10">
-				<div class="">
-				    <div class="win-commandlayout">
-				        <a data-toggle="modal" class="win-command" href="#form_add_prod">
-				           <span class="win-commandicon win-commandring icon-plus-5"></span>
-				           <span class="win-label">Agregar Producto</span>
-				        </a>     
+		<section class="content-header">
+            <h1>
+                Inventario
+                <small>Productos en stock</small>
+            </h1>
+        </section>
+        <div class="content">
+        	<div class="row">
+        		<div class="col-xs-12">
+        			<div class="box box-solid" style="height: 80vh;">
+        				<div class="box-header">
+        					<h3 class="box-title">Productos en stock</h3>
+        				</div><!-- /.box-header -->
+        				<div class="box-body">
+        					<div class="row">
+        						<div class="col-xs-12">
+        							<div class="pull-right">
+        								<button type="button" class="btn btn-primary form-control" data-toggle="modal" href="#form_add_prod" style="margin-bottom: 10px;"><i class="fa fa-plus"></i>&#160;&#160;&#160;Agregar Producto</button>
+        							</div>
+        						</div>
+        					</div>
+        					<div class="row">
+        						<div class="col-xs-12">
+        							<h:form id="listaProductos">				
+										<p:growl id="growl" showDetail="true" life="2000" widgetVar="growl" />				
+										<p:remoteCommand name="eliminarProd" update=":listaProductos growl" oncomplete="" actionListener="#{inventarioBean.eliminarProducto()}"></p:remoteCommand>
+										<p:remoteCommand name="cargarModalUpdateProd" update=":listaProductos :formModificarProd growl" oncomplete="" actionListener="#{inventarioBean.cargarModalModificarProducto()}"></p:remoteCommand>
+							    		<p:dataTable id="lista_productos" value="#{inventarioBean.productos}" var="producto"				    			
+								                     style="height: 38vh;" tableStyleClass="table table-bordered table-hover" paginator="true"
+							                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							                         rowsPerPageTemplate="5,10,15">
+								                     
+										    <p:column headerText="ID" style="text-align: center; width: 80px;">
+										        <h:outputText value="#{producto.idProd}" />
+										    </p:column>
+										 
+										    <p:column headerText="Nombre">
+										        <h:outputText value="#{producto.nmProd}" />
+										    </p:column>
+										 
+										    <p:column headerText="Tipo">
+										        <h:outputText value="#{producto.tipoProd}" />
+										    </p:column>
+										 
+										    <p:column headerText="Marca">
+										        <h:outputText value="#{producto.marca}" />
+										    </p:column>
+										    
+										    <p:column headerText="Cantidad Stock" style="text-align: center;">
+										        <h:outputText value="#{producto.cantProd}" />
+										    </p:column>
+										    
+										    <p:column headerText="Acción" style="text-align: center; width: 100px;">
+								                 <a href="#form_update_prod" data-toggle="modal" onclick="cargarModalUpdateProd([{name:'idProd', value:#{producto.idProd}}]);" class="glyphicon glyphicon-edit"></a> | <a href="#" onclick="eliminarProd([{name:'idProd', value:#{producto.idProd}}]);" class="glyphicon glyphicon-trash"></a>
+								            </p:column>
+										</p:dataTable>
+									</h:form>
+        						</div>
+        					</div>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+		<!-- MODAL PARA AGREGAR PRODUCTO -->
+		<div id="form_add_prod" class="modal fade" role="dialog" aria-labelledby="modalAgregarProd" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+			            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&#215;</span><span class="sr-only">Close</span></button>
+			            <h4 class="modal-title">Agregar Producto</h4>
+			        </div><!-- ./modal-header -->
+			        <div class="modal-body">
+			        	<h:form id="formAgregarProd" styleClass="form-horizontal">
+			        		<p:remoteCommand name="limpiarForm" update=":formAgregarProd" actionListener="#{inventarioBean.iniciarProducto()}"></p:remoteCommand>
+			    			<p:remoteCommand name="ingresarProducto" update=":formAgregarProd :listaProductos" onsuccess="jQuery('#form_add_prod').modal('hide');" actionListener="#{inventarioBean.insertarProducto()}"></p:remoteCommand>
+			        	
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="id_producto">ID</label>
+							   <div class="col-sm-10">
+							   		<p:inputText data-toggle="tooltip" title="ID del producto para identificarlo. Debe ser un valor numérico."  
+							      	styleClass="form-control" id="id_producto" value="#{inventarioBean.producto.idProd}" placeholder="ID del producto"></p:inputText>
+							   </div>							   
+							</div>
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="nm_producto">Nombre</label>
+							   <div class="col-sm-10">
+							   		<p:inputText data-toggle="tooltip" title="Nombre que se le asignará al producto."  
+						      		styleClass="form-control" id="nm_producto" value="#{inventarioBean.producto.nmProd}" placeholder="Nombre del producto"></p:inputText>
+							   </div>							   
+							</div>
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="tipo_producto">Tipo</label>
+							   <div class="col-sm-10">
+							   		<p:inputText data-toggle="tooltip" title="Tipo del producto. Este puede ser bebida, licor, limpieza, etc."  
+							      	styleClass="form-control" id="tipo_producto" value="#{inventarioBean.producto.tipoProd}" placeholder="Tipo de producto"></p:inputText>
+							   </div>
+							</div>
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="marca_prod">Marca</label>
+							   <div class="col-sm-10">
+							   		<p:inputText data-toggle="tooltip" title="Marca del producto. Por ejemplo, Coca-cola, CCU, Confort, etc." 
+							      	styleClass="form-control" id="marca_producto" value="#{inventarioBean.producto.marca}" placeholder="Marca del producto"></p:inputText>
+							   </div>							   
+							</div>
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="img_producto">Imagen</label>
+							   <div class="col-sm-10">
+							      <p:inputText data-toggle="tooltip" title="Imagen del producto. Por ahora no es necesario rellenar este campo." disabled="true"
+							      	styleClass="form-control" id="img_producto" value="#{inventarioBean.producto.imagen}" placeholder="Imagen del producto"></p:inputText>
+							      <br/>
+							      <span class="btn btn-default btn-file">Upload<input disabled="true" type="file" /></span>
+							   </div>
+							</div>
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="detalle_producto">Comentario</label>
+							   <div class="col-sm-10">
+							   		<p:inputText data-toggle="tooltip" title="Agregar cualquier tipo de comentario relacionado al producto."  
+								  	styleClass="form-control" id="detalle_producto" value="#{inventarioBean.producto.detalle}" placeholder="Comentario..."></p:inputText>
+							   </div>
+							</div>
+		       			</h:form>
+				    </div><!-- ./modal-body -->
+				    <div class="modal-footer">
+				        <button class="btn btn-default" onclick="limpiarForm();">Limpiar</button>
+				        <button class="btn btn-primary" onclick="ingresarProducto();">Agregar</button>
 				    </div>
 				</div>
-	        </div>
-	        <div class="span12" style="margin-left: 0px;">
-				<h:form id="listaProductos">				
-					<p:growl id="growl" showDetail="false" life="2000" widgetVar="growl" />				
-					<p:remoteCommand name="eliminarProd" update=":listaProductos growl" oncomplete="setListaProductosTBodyHeight();" actionListener="#{inventarioBean.eliminarProducto()}"></p:remoteCommand>
-					<p:remoteCommand name="cargarModalUpdateProd" update=":listaProductos :formModificarProd growl" oncomplete="setListaProductosTBodyHeight();" actionListener="#{inventarioBean.cargarModalModificarProducto()}"></p:remoteCommand>
-					<h:dataTable id="lista_productos" value="#{inventarioBean.productos}" var="producto"
-				    			styleClass="table table-hover listaProductosTable"
-				    		    columnClasses="data-columna-id, data-columna-nombre, data-columna-tipo, data-columna-marca, data-columna-cantidad, data-columna-imagen, data-columna-detale" >
-	 
-		    			<h:column>
-		    				<f:facet name="header">ID</f:facet>
-		    				#{producto.idProd}
-		    			</h:column>
-		 
-		    			<h:column>
-		    				<f:facet name="header">Nombre</f:facet>
-		    				#{producto.nmProd}
-		    			</h:column>
-		 
-		    			<h:column>
-		    				<f:facet name="header">Tipo</f:facet>
-		    				#{producto.tipoProd}
-		    			</h:column>
-		 
-		    			<h:column>
-		    				<f:facet name="header">Marca</f:facet>
-		    				#{producto.marca}
-		    			</h:column>
-		    			
-		    			<h:column id="prueba">
-		    				<f:facet name="header">Cantidad</f:facet>
-		    				#{producto.cantProd}
-		    			</h:column>
-		    			
-		    			<h:column headerClass="header-columna-detalle">
-		    				<f:facet name="header">Detalle</f:facet>
-		    				#{producto.detalle}
-		    			</h:column>
-		    			
-		    			<h:column>
-		    				<f:facet name="header">Acción</f:facet>
-		    				<a href="#form_update_prod" data-toggle="modal" onclick="cargarModalUpdateProd([{name:'idProd', value:#{producto.idProd}}]);" class="icon-pen-alt2"></a> | <a href="#" onclick="eliminarProd([{name:'idProd', value:#{producto.idProd}}]);" class="icon-trashcan-2"></a>
-		    			</h:column>
-		 
-		    		</h:dataTable>
-				</h:form>
-				<script>
-					setListaProductosTBodyHeight();
-				</script>
 			</div>
-		</div>
-		<!-- MODAL PARA AGREGAR PRODUCTO -->
-		<div id="form_add_prod" class="modal hide fade">
-	        <div class="modal-header">
-	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-	            <h3>Agregar Producto</h3>
-	            <h5>Agregar un nuevo producto al inventario de productos.</h5>
-	        </div>
-			<div class="modal-body" style="overflow: hidden;">
-	        	<h:form id="formAgregarProd" styleClass="form-horizontal">
-	        		<p:remoteCommand name="limpiarForm" update=":formAgregarProd" actionListener="#{inventarioBean.iniciarProducto()}"></p:remoteCommand>
-	    			<p:remoteCommand name="ingresarProducto" update=":formAgregarProd :listaProductos" oncomplete="setListaProductosTBodyHeight();" onsuccess="jQuery('#form_add_prod').modal('hide');" actionListener="#{inventarioBean.insertarProducto()}"></p:remoteCommand>
-	        	
-					<div class="control-group">
-					   <label class="control-label" for="id_producto">ID</label>
-					   <div class="controls">
-					      <p:inputText data-toggle="tooltip" title="ID del producto para identificarlo. Debe ser un valor numérico."  
-					      	id="id_producto" value="#{inventarioBean.producto.idProd}" placeholder="ID del producto"></p:inputText>
-					   </div>
-					</div>
-					<div class="control-group">
-					   <label class="control-label" for="nm_producto">Nombre</label>
-					   <div class="controls">
-					      <p:inputText data-toggle="tooltip" title="Nombre que se le asignará al producto."  
-				      		id="nm_producto" value="#{inventarioBean.producto.nmProd}" placeholder="Nombre del producto"></p:inputText>
-					   </div>
-					</div>
-					<div class="control-group">
-					   <label class="control-label" for="tipo_producto">Tipo</label>
-					   <div class="controls">
-					      <p:inputText data-toggle="tooltip" title="Tipo del producto. Este puede ser bebida, licor, limpieza, etc."  
-					      	id="tipo_producto" value="#{inventarioBean.producto.tipoProd}" placeholder="Tipo de producto"></p:inputText>
-					   </div>
-					</div>
-					<div class="control-group">
-					   <label class="control-label" for="marca_prod">Marca</label>
-					   <div class="controls">
-					      <p:inputText data-toggle="tooltip" title="Marca del producto. Por ejemplo, Coca-cola, CCU, Confort, etc." 
-					      	id="marca_producto" value="#{inventarioBean.producto.marca}" placeholder="Marca del producto"></p:inputText>
-					   </div>
-					</div>
-					<div class="control-group">
-					   <label class="control-label" for="img_producto">Imagen</label>
-					   <div class="controls">
-					      <p:inputText data-toggle="tooltip" title="Imagen del producto. Por ahora no es necesario rellenar este campo."  
-					      	id="img_producto" value="#{inventarioBean.producto.imagen}" placeholder="Imagen del producto"></p:inputText>
-					      <br/>
-					      <span class="btn btn-default btn-file">Upload<input disabled="true" type="file" /></span>
-					   </div>
-					</div>
-					<div class="control-group">
-					   <label class="control-label" for="detalle_producto">Comentario</label>
-					   <div class="controls">	
-						  <p:inputText data-toggle="tooltip" title="Agregar cualquier tipo de comentario relacionado al producto."  
-						  	id="detalle_producto" value="#{inventarioBean.producto.detalle}" placeholder="Comentario..."></p:inputText>	                
-					   </div>
-					</div>
-       			</h:form>
-		    </div>
-		    <div class="modal-footer">
-		        <a href="#" class="btn" onclick="limpiarForm();">Limpiar</a>
-		        <a href="#" class="btn btn-primary" onclick="ingresarProducto();">Agregar</a>
-		    </div>
 		</div>
 		<!-- FIN MODAL PARA AGREGAR PRODUCTO -->
 		<!-- MODAL PARA MODIFICAR PRODUCTO -->
-		<div id="form_update_prod" class="modal hide fade">
-	        <div class="modal-header">
-	            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-	            <h3>Modificar Producto</h3>
-	            <h5>Modificar producto del inventario.</h5>
-	        </div>
-			<div class="modal-body" style="overflow: hidden;">
-	        	<h:form id="formModificarProd" styleClass="form-horizontal">
-	    			<p:remoteCommand name="modificarProducto" update=":formModificarProd :listaProductos" oncomplete="setListaProductosTBodyHeight();" onsuccess="jQuery('#form_update_prod').modal('hide');" actionListener="#{inventarioBean.modificarProducto()}"></p:remoteCommand>
-	        	
-					<div class="control-group">
-					   <label class="control-label" for="id_producto">ID</label>
-					   <div class="controls">
-					      <p:inputText data-toggle="tooltip" title="ID del producto para identificarlo. Debe ser un valor numérico."  
-					      	id="id_producto" value="#{inventarioBean.productoMod.idProd}" placeholder="ID del producto"></p:inputText>
-					   </div>
-					</div>
-					<div class="control-group">
-					   <label class="control-label" for="nm_producto">Nombre</label>
-					   <div class="controls">
-					      <p:inputText data-toggle="tooltip" title="Nombre que se le asignará al producto."  
-					      	id="nm_producto" value="#{inventarioBean.productoMod.nmProd}" placeholder="Nombre del producto"></p:inputText>
-					   </div>
-					</div>
-					<div class="control-group">
-					   <label class="control-label" for="tipo_producto">Tipo</label>
-					   <div class="controls">
-					      <p:inputText data-toggle="tooltip" title="Tipo del producto. Este puede ser bebida, licor, limpieza, etc."  
-					      	id="tipo_producto" value="#{inventarioBean.productoMod.tipoProd}" placeholder="Tipo de producto"></p:inputText>
-					   </div>
-					</div>
-					<div class="control-group">
-					   <label class="control-label" for="marca_prod">Marca</label>
-					   <div class="controls">
-					      <p:inputText data-toggle="tooltip" title="Marca del producto. Por ejemplo, Coca-cola, CCU, Confort, etc." 
-					      	id="marca_producto" value="#{inventarioBean.productoMod.marca}" placeholder="Marca del producto"></p:inputText>
-					   </div>
-					</div>
-					<div class="control-group">
-					   <label class="control-label" for="img_producto">Imagen</label>
-					   <div class="controls">
-					      <p:inputText data-toggle="tooltip" title="Imagen del producto. Por ahora no es necesario rellenar este campo." 
-					      	id="img_producto" value="#{inventarioBean.productoMod.imagen}" placeholder="Imagen del producto"></p:inputText>
-					      <br/>
-					      <span class="btn btn-default btn-file">Upload<input disabled="true" type="file" /></span>
-					   </div>
-					</div>
-					<div class="control-group">
-					   <label class="control-label" for="detalle_producto">Comentario</label>
-					   <div class="controls">	
-						  <p:inputText data-toggle="tooltip" title="Agregar cualquier tipo de comentario relacionado al producto." 
-						  	id="detalle_producto" value="#{inventarioBean.productoMod.detalle}" placeholder="Comentario..."></p:inputText>	                
-					   </div>
-					</div>
-       			</h:form>
-		    </div>
-		    <div class="modal-footer">
-		        <a href="#" class="btn" data-dismiss="modal">Cancelar</a>
-		        <a href="#" class="btn btn-primary" onclick="modificarProducto();">Modificar</a>
-		    </div>
+		<div id="form_update_prod" class="modal fade" role="dialog" aria-labelledby="modalModificarProd" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+			            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&#215;</span><span class="sr-only">Close</span></button>
+			            <h4 class="modal-title">Modificar Producto</h4>
+			        </div><!-- ./modal-header -->
+			        <div class="modal-body" style="overflow: hidden;">
+			        	<h:form id="formModificarProd" styleClass="form-horizontal">
+			    			<p:remoteCommand name="modificarProducto" update=":formModificarProd :listaProductos" onsuccess="jQuery('#form_update_prod').modal('hide');" actionListener="#{inventarioBean.modificarProducto()}"></p:remoteCommand>
+			        	
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="id_producto">ID</label>
+							   <div class="col-sm-10">
+							      <p:inputText styleClass="form-control" data-toggle="tooltip" title="ID del producto para identificarlo. Debe ser un valor numérico."  
+							      	id="id_producto" value="#{inventarioBean.productoMod.idProd}" placeholder="ID del producto"></p:inputText>
+							   </div>
+							</div>
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="nm_producto">Nombre</label>
+							   <div class="col-sm-10">
+							      <p:inputText styleClass="form-control" data-toggle="tooltip" title="Nombre que se le asignará al producto."  
+							      	id="nm_producto" value="#{inventarioBean.productoMod.nmProd}" placeholder="Nombre del producto"></p:inputText>
+							   </div>
+							</div>
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="tipo_producto">Tipo</label>
+							   <div class="col-sm-10">
+							      <p:inputText styleClass="form-control" data-toggle="tooltip" title="Tipo del producto. Este puede ser bebida, licor, limpieza, etc."  
+							      	id="tipo_producto" value="#{inventarioBean.productoMod.tipoProd}" placeholder="Tipo de producto"></p:inputText>
+							   </div>
+							</div>
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="marca_prod">Marca</label>
+							   <div class="col-sm-10">
+							      <p:inputText styleClass="form-control" data-toggle="tooltip" title="Marca del producto. Por ejemplo, Coca-cola, CCU, Confort, etc." 
+							      	id="marca_producto" value="#{inventarioBean.productoMod.marca}" placeholder="Marca del producto"></p:inputText>
+							   </div>
+							</div>
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="img_producto">Imagen</label>
+							   <div class="col-sm-10">
+							      <p:inputText styleClass="form-control" data-toggle="tooltip" title="Imagen del producto. Por ahora no es necesario rellenar este campo." 
+							      	id="img_producto" value="#{inventarioBean.productoMod.imagen}" placeholder="Imagen del producto" disabled="true"></p:inputText>
+							      <br/>
+							      <span class="btn btn-default btn-file">Upload<input disabled="true" type="file" /></span>
+							   </div>
+							</div>
+							<div class="form-group">
+							   <label class="col-sm-2 control-label" for="detalle_producto">Comentario</label>
+							   <div class="col-sm-10">	
+								  <p:inputText styleClass="form-control" data-toggle="tooltip" title="Agregar cualquier tipo de comentario relacionado al producto." 
+								  	id="detalle_producto" value="#{inventarioBean.productoMod.detalle}" placeholder="Comentario..."></p:inputText>	                
+							   </div>
+							</div>
+		       			</h:form>
+				    </div><!-- ./modal-body -->
+				    <div class="modal-footer">
+				        <button class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				        <button class="btn btn-primary" onclick="modificarProducto();">Modificar</button>
+				    </div><!-- ./modal-footer -->
+				</div>
+			</div>
 		</div>
 		<!-- FIN MODAL PARA MODIFICAR PRODUCTO -->
 		<script>

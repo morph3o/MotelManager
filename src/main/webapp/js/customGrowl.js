@@ -48,18 +48,23 @@ PrimeFaces.widget.Growl = PrimeFaces.widget.BaseWidget.extend({
     },
     
     renderMessage: function(msg) {
-        var markup = '<div class="toast toasttext03 growl-severity-' + msg.severity + '" aria-live="polite">';
-        markup += '<div class="ui-growl-item">';
-        markup += '<button type="button" class="close ui-growl-icon-close"></button>';
-        markup += '<div class="toast-body">';
-        markup += '<h4 class="toast-title toast-heading"></h4>';
-        markup += '<p></p>';
-        markup += '</div><div style="clear: both;"></div></div></div>';
+    	var icon = msg.severity;
+    	if(msg.severity == 'error'){
+    		msg.severity = 'danger';
+    		icon = 'ban';
+    	}
+        var markup = '<div class="alert alert-' + msg.severity + ' alert-dismissable" aria-live="polite">';
+        markup += '<i class="fa fa-'+icon+'"></i>';
+        markup += '<button type="button" class="close ui-growl-icon-close" aria-hidden="true">x</button>';
+        markup += '<b class="alert-title"></b>';
+        markup += '<p class="alert-message"></p>';
+        markup += '</div><div style="clear: both;"></div></div>';
 
         var message = $(markup),
-        summaryEL = message.find('h4.toast-title'),
-        detailEL = summaryEL.next();
+        summaryEL = message.find('b.alert-title'),
+        detailEL = message.find('p.alert-message');
         
+        alert(msg.summary+" - "+msg.detail);
         if(this.cfg.escape) {
             summaryEL.text(msg.summary);
             detailEL.text(msg.detail);

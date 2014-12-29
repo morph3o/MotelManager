@@ -10,18 +10,67 @@
 			<p:remoteCommand name="verInventario" update=":pcontent" action="toInventario" actionListener="#{routerBean.setNextPage('listaProductos')}" />
 			<p:remoteCommand name="ingresarProd" update=":pcontent" action="toInventario" actionListener="#{routerBean.setNextPage('ingresarProds')}" />
 			<p:remoteCommand name="sacarProd" update=":pcontent" action="toInventario" actionListener="#{routerBean.setNextPage('sacarProds')}" />
+			<p:remoteCommand name="historialEntradas" update=":pcontent" action="toInventario" actionListener="#{routerBean.setNextPage('historialEntradas')}" />
 			
-			<ul class="nav metro-nav-list">
-	           <li class="active">
-	              <a href="#">Inventario</a>
-	              <ul class="nav">
-	                <li><a href="#" onclick="verInventario();">Ver Inventario</a></li>
-	                <li><a href="#" onclick="ingresarProd();">Ingresar Productos</a></li>
-	                <li><a href="#" onclick="sacarProd();">Sacar Productos</a></li>
-	              </ul>
-	              <a href="#">Facturación</a>
-	           </li>
-	        </ul>
+			<!-- Left side column. contains the logo and sidebar -->
+            <aside class="left-side sidebar-offcanvas">
+                <!-- sidebar: style can be found in sidebar.less -->
+                <section class="sidebar">
+                    <!-- Sidebar user panel -->
+                    <div class="user-panel">
+                        <div class="pull-left image">
+                            <img src="../assets/img/avatar3.png" class="img-circle" alt="User Image" />
+                        </div>
+                        <div class="pull-left info">
+                            <p>Hello, Jane</p>
+
+                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                        </div>
+                    </div>
+                    <!-- search form -->
+                    <div class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                            <span class="input-group-btn">
+                                <button type="submit" name="seach" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.search form -->
+                    <!-- sidebar menu: : style can be found in sidebar.less -->
+                    <ul class="sidebar-menu">
+                        <li>
+                            <a href="#" onclick="ingresarProd();">
+                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-th-list"></i>
+                                <span>Inventario</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="#" onclick="verInventario();"><i class="fa fa-angle-double-right"></i> Productos</a></li>
+                                <li><a href="#" onclick="ingresarProd();"><i class="fa fa-angle-double-right"></i> Ingresar productos</a></li>
+                                <li><a href="#" onclick="sacarProd();"><i class="fa fa-angle-double-right"></i> Sacar productos</a></li>
+                                <li class="treeview">
+                                	<a href="#">
+		                                <i class="fa fa-calendar"></i>
+		                                <span>Historial</span>
+		                                <i class="fa fa-angle-left pull-right"></i>
+		                            </a>
+                                	<ul class="treeview-menu">
+                                		<li><a href="#" onclick="ingresarProd();"><i class="fa fa-angle-double-right"></i> Historial ingresos</a></li>
+                                		<li><a href="#" onclick="ingresarProd();"><i class="fa fa-angle-double-right"></i> Historial egresos</a></li>
+                                	</ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+                <!-- /.sidebar -->
+            </aside>
         </h:form>
 	</ui:define>
 

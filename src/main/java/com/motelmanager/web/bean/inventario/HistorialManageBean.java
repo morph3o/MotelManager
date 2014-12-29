@@ -4,15 +4,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 
-@Controller("historialBean")
-public class HistorialManageBean {
-	private List<Object> historial;
+import com.motelmanager.domain.Entrada;
 
-	public List<Object> getHistorial() {
-		return historial;
+@Controller("historialEntradasBean")
+public class HistorialManageBean {
+	
+	private List<Entrada> listaEntradas;
+
+	public List<Entrada> getListaEntradas() {
+		return listaEntradas;
 	}
 
-	public void setHistorial(List<Object> historial) {
-		this.historial = historial;
+	public void setListaEntradas(List<Entrada> listaEntradas) {
+		this.listaEntradas = listaEntradas;
 	}
 }
