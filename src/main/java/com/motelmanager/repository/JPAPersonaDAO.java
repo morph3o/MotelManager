@@ -24,7 +24,8 @@ public class JPAPersonaDAO implements PersonaDAO{
 		if(nombreUsuario != null && !nombreUsuario.isEmpty()){
 			Query q = em.createQuery("SELECT p FROM Persona p WHERE p.nombreUsuario LIKE :nombreUsuario");
 			q.setParameter("nombreUsuario", nombreUsuario);
-			Persona persona = new Persona((Persona)q.getSingleResult());
+			//Persona persona = new Persona((Persona)q.getSingleResult());
+			Persona persona = null;
 			if(persona != null){
 				return persona;
 			}
