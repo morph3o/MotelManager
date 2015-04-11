@@ -17,6 +17,7 @@ import com.motelmanager.domain.Producto;
 import com.motelmanager.domain.Salida;
 import com.motelmanager.service.ProductManager;
 import com.motelmanager.service.SalidaManager;
+import com.motelmanager.util.DateTool;
 import com.motelmanager.util.FacesMessageUtil;
 
 @Controller("salidasBean")
@@ -30,7 +31,7 @@ public class SalidasManageBean {
 	
 	private int idSalida;
 	private int cantidadEgreso;
-	private Date fechaSalida;
+	private String fechaSalida;
 	private String prodSelec;
 	private Salida salidaIngresar;
 	private List<DetalleSalida> detalleSalida;
@@ -146,7 +147,7 @@ public class SalidasManageBean {
 		try{
 			if(this.validarFormularioEntrada()){
 				salidaIngresar.setIdSalida(idSalida);
-				salidaIngresar.setFechaEgreso(fechaSalida);
+				salidaIngresar.setFechaEgreso(DateTool.stringToDate(fechaSalida));
 				salidaManager.ingresarSalidas(salidaIngresar, this.detalleSalida);
 				this.init();
 				FacesMessageUtil.showInfoMessage("Se han ingresado los productos satisfactoriamente");
@@ -177,11 +178,11 @@ public class SalidasManageBean {
 		this.idSalida = idSalida;
 	}
 	
-	public Date getFechaSalida() {
+	public String getFechaSalida() {
 		return fechaSalida;
 	}
 	
-	public void setFechaSalida(Date fechaSalida) {
+	public void setFechaSalida(String fechaSalida) {
 		this.fechaSalida = fechaSalida;
 	}
 	

@@ -9,14 +9,13 @@
 		<section class="content-header">
             <h1>
                 Inventario
-                <small>Productos en stock</small>
             </h1>
         </section>
         <div class="content">
         	<div class="row">
         		<div class="col-xs-12">
-        			<div class="box box-solid" style="height: 80vh;">
-        				<div class="box-header">
+        			<div class="box">
+        				<div class="box-header with-border">
         					<h3 class="box-title">Productos en stock</h3>
         				</div><!-- /.box-header -->
         				<div class="box-body">
@@ -34,9 +33,7 @@
 										<p:remoteCommand name="eliminarProd" update=":listaProductos growl" oncomplete="" actionListener="#{inventarioBean.eliminarProducto()}"></p:remoteCommand>
 										<p:remoteCommand name="cargarModalUpdateProd" update=":listaProductos :formModificarProd growl" oncomplete="" actionListener="#{inventarioBean.cargarModalModificarProducto()}"></p:remoteCommand>
 							    		<p:dataTable id="lista_productos" value="#{inventarioBean.productos}" var="producto"				    			
-								                     style="height: 38vh;" tableStyleClass="table table-bordered table-hover" paginator="true"
-							                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-							                         rowsPerPageTemplate="5,10,15">
+								                     tableStyleClass="table table-bordered table-hover">
 								                     
 										    <p:column headerText="ID" style="text-align: center; width: 80px;">
 										        <h:outputText value="#{producto.idProd}" />
@@ -54,6 +51,10 @@
 										        <h:outputText value="#{producto.marca}" />
 										    </p:column>
 										    
+										    <p:column headerText="Detalle">
+										        <h:outputText value="#{producto.detalle}" />
+										    </p:column>
+										    
 										    <p:column headerText="Cantidad Stock" style="text-align: center;">
 										        <h:outputText value="#{producto.cantProd}" />
 										    </p:column>
@@ -62,6 +63,52 @@
 								                 <a href="#form_update_prod" data-toggle="modal" onclick="cargarModalUpdateProd([{name:'idProd', value:#{producto.idProd}}]);" class="glyphicon glyphicon-edit"></a> | <a href="#" onclick="eliminarProd([{name:'idProd', value:#{producto.idProd}}]);" class="glyphicon glyphicon-trash"></a>
 								            </p:column>
 										</p:dataTable>
+										<script>
+											$("#formAgregarProd\\:id_producto").tooltip({
+								        		placement:'right'
+								        	}); 
+								        	$("#formAgregarProd\\:nm_producto").tooltip({
+								        		placement:'right'
+								        	});
+								        	$("#formAgregarProd\\:tipo_producto").tooltip({
+								        		placement:'right'
+								        	});
+								        	$("#formAgregarProd\\:marca_producto").tooltip({
+								        		placement:'right'
+								        	});
+								        	$("#formAgregarProd\\:img_producto").tooltip({
+								        		placement:'right'
+								        	});
+								        	$("#formAgregarProd\\:detalle_producto").tooltip({
+								        		placement:'right'
+								        	});
+								        	$("#formModificarProd\\:id_producto").tooltip({
+								        		placement:'right'
+								        	}); 
+								        	$("#formModificarProd\\:nm_producto").tooltip({
+								        		placement:'right'
+								        	});
+								        	$("#formModificarProd\\:tipo_producto").tooltip({
+								        		placement:'right'
+								        	});
+								        	$("#formModificarProd\\:marca_producto").tooltip({
+								        		placement:'right'
+								        	});
+								        	$("#formModificarProd\\:img_producto").tooltip({
+								        		placement:'right'
+								        	});
+								        	$("#formModificarProd\\:detalle_producto").tooltip({
+								        		placement:'right'
+								        	});
+											$('table').dataTable({
+										          "bPaginate": true,
+										          "bLengthChange": false,
+										          "bFilter": false,
+										          "bSort": true,
+										          "bInfo": true,
+										          "bAutoWidth": false										       
+										    });
+										</script>
 									</h:form>
         						</div>
         					</div>
@@ -203,45 +250,5 @@
 			</div>
 		</div>
 		<!-- FIN MODAL PARA MODIFICAR PRODUCTO -->
-		<script>
-			$(document).ready(function(){
-	        	$("#formAgregarProd\\:id_producto").tooltip({
-	        		placement:'right'
-	        	}); 
-	        	$("#formAgregarProd\\:nm_producto").tooltip({
-	        		placement:'right'
-	        	});
-	        	$("#formAgregarProd\\:tipo_producto").tooltip({
-	        		placement:'right'
-	        	});
-	        	$("#formAgregarProd\\:marca_producto").tooltip({
-	        		placement:'right'
-	        	});
-	        	$("#formAgregarProd\\:img_producto").tooltip({
-	        		placement:'right'
-	        	});
-	        	$("#formAgregarProd\\:detalle_producto").tooltip({
-	        		placement:'right'
-	        	});
-	        	$("#formModificarProd\\:id_producto").tooltip({
-	        		placement:'right'
-	        	}); 
-	        	$("#formModificarProd\\:nm_producto").tooltip({
-	        		placement:'right'
-	        	});
-	        	$("#formModificarProd\\:tipo_producto").tooltip({
-	        		placement:'right'
-	        	});
-	        	$("#formModificarProd\\:marca_producto").tooltip({
-	        		placement:'right'
-	        	});
-	        	$("#formModificarProd\\:img_producto").tooltip({
-	        		placement:'right'
-	        	});
-	        	$("#formModificarProd\\:detalle_producto").tooltip({
-	        		placement:'right'
-	        	});
-	     	}); 
-		</script>
 	</ui:define>
 </ui:composition>

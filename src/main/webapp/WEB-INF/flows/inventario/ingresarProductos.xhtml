@@ -5,17 +5,17 @@
 	xmlns:p="http://primefaces.org/ui"
 	template="/WEB-INF/layouts/relative_layout_app.xhtml">
 
-	<ui:define name="content">
+	<ui:define name="content"><!-- content-wrapper -->
 		<section class="content-header">
             <h1>
                 Inventario
                 <small>Ingresar Productos</small>
             </h1>
         </section>			
-		<div class="content">
+		<section class="content">
 			<div class="row">
 				<div class="col-xs-12">
-                    <div class="box box-solid" style="height: 80vh;">
+                    <div class="box box-solid">
                     	<div class="box-header">
                             <h3 class="box-title">Formulario de ingreso</h3>
                         </div><!-- /.box-header -->
@@ -55,8 +55,8 @@
 							         <p:remoteCommand name="ingresarEntrada" update=":listaProductos growl" oncomplete="jQuery('#confirmar_ingreso').modal('hide');" actionListener="#{entradasBean.ingresarEntradas}"></p:remoteCommand>
 							         <p:remoteCommand name="limpiarEntrada" update=":listaProductos growl" oncomplete="jQuery('#confirmar_limpiar').modal('hide');" actionListener="#{entradasBean.init}"></p:remoteCommand>	                
 							         <p:dataTable id="tablaProductosEntrada" value="#{entradasBean.detalleEntrada}" var="detalleEntrada"
-							                      tableStyle="height: 38vh;" tableStyleClass="table table-bordered table-hover">
-									    <p:column headerText="Id">
+							                      tableStyleClass="table table-bordered table-hover">
+									    <p:column headerText="ID">
 									        <h:outputText value="#{detalleEntrada.producto.idProd}" />
 									    </p:column>
 									 
@@ -80,6 +80,21 @@
 							                 <span onclick="eliminarProdLista([{name:'idProd', value:#{detalleEntrada.producto.idProd}}]);" class="glyphicon glyphicon-trash" style="cursor: pointer;"></span>
 							            </p:column>
 									</p:dataTable>
+									<script type="text/javascript">
+										$('#fecha_ingreso').datepicker({
+						    	            todayBtn: "linked",
+						    	            orientation: "top left",
+						    	            format: "dd/mm/yyyy",
+						    	            todayHighlight: true
+						    	        });
+						        		$("#id_entrada").tooltip({
+							        		placement:'right'
+							        	}); 
+							        	$("#fecha_ingreso").tooltip({
+							        		placement:'right',
+							        		title: 'Fecha de cuando se hace egreso de los productos.'	        		
+							        	});
+									</script>
 						         </div>                        
 							  </div>
 							 </h:form>
@@ -93,7 +108,7 @@
    					</div> <!-- BOX END -->
  				</div>
 	        </div>
-        </div>
+        </section>
         <script>
         </script>
         <!-- MODAL AGREGAR PRODUCTO -->
@@ -173,21 +188,6 @@
         <!-- FIN MODAL CONFIRMACION LIMPIAR ENTRADA -->
         <script src="../assets/js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
         <script>
-        	$(document).ready(function(){
-        		$('#fecha_ingreso').datepicker({
-    	            todayBtn: "linked",
-    	            orientation: "top left",
-    	            format: "dd/mm/yyyy",
-    	            todayHighlight: true
-    	        });
-        		$("#id_entrada").tooltip({
-	        		placement:'right'
-	        	}); 
-	        	$("#fecha_ingreso").tooltip({
-	        		placement:'right',
-	        		title: 'Fecha de cuando se hace egreso de los productos.'	        		
-	        	});	
-        	});
         </script>
 	</ui:define>
 </ui:composition>

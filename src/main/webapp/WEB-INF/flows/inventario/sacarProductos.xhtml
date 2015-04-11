@@ -32,7 +32,7 @@
 						                <div class="form-group">
 						                    <label class="control-label" for="fecha">Fecha</label>
 											<div id="fecha_retiro" class="input-group date">
-										   		<p:inputText type="text" styleClass="form-control" value="#{entradasBean.fechaIngreso}"/><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+										   		<p:inputText type="text" styleClass="form-control" value="#{salidasBean.fechaSalida}"/><span class="input-group-addon"><i class="fa fa-calendar"></i></span>
 										    </div>
 						                </div>
 					        		</div>	          
@@ -73,6 +73,21 @@
 							                 <span onclick="eliminarProdLista([{name:'idProd', value:#{detalleSalida.producto.idProd}}]);" class="glyphicon glyphicon-trash" style="cursor: pointer;"></span>
 							            </p:column>
 									</p:dataTable>
+									<script>
+										$('#fecha_retiro').datepicker({
+						    	            todayBtn: "linked",
+						    	            orientation: "top left",
+						    	            format: "dd/mm/yyyy",
+						    	            todayHighlight: true
+						    	        });
+							        	$("#id_salida").tooltip({
+							        		placement:'right'
+							        	}); 
+							        	$("#fecha_retiro").tooltip({
+							        		placement:'right',
+							        		title: 'Fecha de cuando se hace egreso de los productos.'	        		
+							        	});
+									</script>
 						        </div>
 					        </h:form>
 						</div><!-- ./box-body -->
@@ -164,22 +179,5 @@
 		</div>
         <!-- FIN MODAL CONFIRMACION LIMPIAR SALIDA -->
         <script src="../assets/js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-        <script>
-       		$(document).ready(function(){
-       			$('#fecha_retiro').datepicker({
-    	            todayBtn: "linked",
-    	            orientation: "top left",
-    	            format: "dd/mm/yyyy",
-    	            todayHighlight: true
-    	        });
-	        	$("#id_salida").tooltip({
-	        		placement:'right'
-	        	}); 
-	        	$("#fecha_retiro").tooltip({
-	        		placement:'right',
-	        		title: 'Fecha de cuando se hace egreso de los productos.'	        		
-	        	});	        	
-	     	});
-        </script>
 	</ui:define>
 </ui:composition>
