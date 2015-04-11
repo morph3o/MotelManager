@@ -50,3 +50,5 @@ target/test-classes/jdbc.properties
 target/test-classes/test-context.xml
 /.classpath
 /.springWebflow
+
+*.class
