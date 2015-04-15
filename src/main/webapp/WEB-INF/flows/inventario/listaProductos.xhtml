@@ -35,31 +35,23 @@
 							    		<p:dataTable id="lista_productos" value="#{inventarioBean.productos}" var="producto"				    			
 								                     tableStyleClass="table table-bordered table-hover">
 								                     
-										    <p:column headerText="ID" style="text-align: center; width: 80px;">
+										    <p:column headerText="ID" styleClass="text-center col-xs-1">
 										        <h:outputText value="#{producto.idProd}" />
 										    </p:column>
 										 
-										    <p:column headerText="Nombre">
+										    <p:column headerText="Nombre" styleClass="text-left col-xs-3">
 										        <h:outputText value="#{producto.nmProd}" />
 										    </p:column>
-										 
-										    <p:column headerText="Tipo">
-										        <h:outputText value="#{producto.tipoProd}" />
-										    </p:column>
-										 
-										    <p:column headerText="Marca">
-										        <h:outputText value="#{producto.marca}" />
-										    </p:column>
 										    
-										    <p:column headerText="Detalle">
+										    <p:column headerText="Detalle" styleClass="text-left col-xs-6">
 										        <h:outputText value="#{producto.detalle}" />
 										    </p:column>
 										    
-										    <p:column headerText="Cantidad Stock" style="text-align: center;">
+										    <p:column headerText="Cantidad Stock" styleClass="text-center col-xs-1">
 										        <h:outputText value="#{producto.cantProd}" />
 										    </p:column>
 										    
-										    <p:column headerText="Acción" style="text-align: center; width: 100px;">
+										    <p:column headerText="Acción" styleClass="text-center col-xs-1">
 								                 <a href="#form_update_prod" data-toggle="modal" onclick="cargarModalUpdateProd([{name:'idProd', value:#{producto.idProd}}]);" class="glyphicon glyphicon-edit"></a> | <a href="#" onclick="eliminarProd([{name:'idProd', value:#{producto.idProd}}]);" class="glyphicon glyphicon-trash"></a>
 								            </p:column>
 										</p:dataTable>
@@ -106,7 +98,14 @@
 										          "bFilter": false,
 										          "bSort": true,
 										          "bInfo": true,
-										          "bAutoWidth": false										       
+										          "bAutoWidth": true,
+										          "iDisplayLength": 8,
+										          "oLanguage":{
+										            "oPaginate":{
+										              "sPrevious":"",
+										              "sNext":""
+										            }
+										          }
 										    });
 										</script>
 									</h:form>
